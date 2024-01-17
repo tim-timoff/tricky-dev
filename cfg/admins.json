@@ -1,0 +1,37 @@
+{
+    "admin1": {
+        "id": "2",
+        "firstName": "Волк",
+        "secondName": "Волков",
+        "name": "Волк Волков",
+        "email": "amusing.english.2018@gmail.com",
+        "pass": "Petropavlovsk1949",
+        "uEmailConfirmed": false,
+        "uIsAdmin": false,
+        "uIsLoggedIn": false,
+        "eMailConfirmationLink": "",
+        "uNick": "Волчара"
+    },
+    "admin2": {
+        "id": "1",
+        "firstName": "Tricky",
+        "secondName": "English",
+        "name": "Tricky English",
+        "email": "tim.timoff@gmail.com",
+        "pass": "agwwbnr",
+        "uEmailConfirmed": false,
+        "eMailConfirmationLink": "",
+        "uNick": "Tricky"
+    },
+    "admin3": {
+        "id": "3",
+        "firstName": "Странная",
+        "secondName": "Личность",
+        "name": "Странная Личность",
+        "email": "y.timoshenkoff@yandex.ru",
+        "pass": "Severodvinsk1937",
+        "uEmailConfirmed": false,
+        "eMailConfirmationLink": "",
+        "uNick": "Странник"
+    }
+}

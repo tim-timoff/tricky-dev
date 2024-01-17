@@ -1,0 +1,21 @@
+{
+  "ts-node": {
+    "transpileOnly": true,
+    "esm": true,
+  },
+  "compilerOptions": {
+    "types": ["node"],
+    "esModuleInterop": true,
+    "target": "ES2018",
+    "module": "CommonJS",
+    "moduleResolution": "Node",
+    "strict": true,
+    "outDir": "out",
+    "forceConsistentCasingInFileNames": true,
+    "removeComments": true,
+    "plugins": [{ "transform": "typescript-transform-paths" }] 
+  },
+  "exclude": ["node_modules"],
+  "include": ["src/*.ts"],
+  "extends": "./paths.json"
+}

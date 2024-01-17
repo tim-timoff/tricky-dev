@@ -1,0 +1,68 @@
+/* font-family: 'Alegreya Sans', sans-serif; */
+
+:root {
+    --main-blue: #101a79;
+    --main-burgundy: #6e0a69;
+    --txt: #242424;
+    --ok: #004113;
+    --not-ok: #da0000;
+    --paper:#fff8d2;
+    --paper-transparent: rgba(255, 248, 210, 0.7);
+    --paper-shadow:#e0d9ad;
+  }
+
+body {
+  padding: 3px;
+}
+
+img {
+  display: block;
+}
+
+.img-container {
+  overflow: hidden;
+  position: relative;
+  width: 80%;
+  height: 320px;
+  border: 5px solid;
+  border-color: var(--paper-shadow);
+  margin: auto;
+}
+
+.img-cropped {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.main-container {
+  text-align: center;
+  height: 100%;
+}
+
+.site-title {
+  font-family: 'Alegreya Sans', sans-serif;
+  font-weight: 500;
+  font-size: 64px;
+  color: var(--main-burgundy);
+  padding-top: 24px;
+  padding-bottom: 12px;
+}
+
+.text-layer {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%); /* Center the text layer precisely */
+  color: var(--txt);
+  font-size: 16px;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5); /* Optional: Text shadow for better visibility */
+  background-color: var(--paper-transparent);
+  font-family: 'Alegreya Sans', sans-serif;
+  margin: auto;
+  padding: 32px;
+  border-radius: 6px;
+}
+
+  
+

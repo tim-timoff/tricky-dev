@@ -1,0 +1,30 @@
+{
+  "name": "tricky_english_site",
+  "version": "0.1",
+  "description": "Blog Web-site",
+  "keywords": [
+    "tricky english",
+    "pre-alpha"
+  ],
+  "author": "Tim Timoff",
+  "license": "ISC",
+  "engines": {
+    "node": ">=16.0.0"
+  },
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "express": "^4.18.2",
+    "mongoose": "^8.0.4",
+    "typescript": "^5.3.3",
+    "validator": "^13.11.0",
+    "winston": "^3.11.0"
+  },
+  "devDependencies": {
+    "@types/bcrypt": "^5.0.2",
+    "bcrypt": "^5.1.1"
+  },
+  "scripts": {
+    "compile": "npx tsc -p tsconfig.json",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  }
+}
