@@ -16,8 +16,6 @@ try {
 
 const adminsArray = Object.values(adminData);
 
-
-
 for (const admin of adminsArray) {
   logger.info(`Admin: ${JSON.stringify(admin)}`);
 }

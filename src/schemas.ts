@@ -1,8 +1,7 @@
 import mongoose, { Document, Schema } from 'mongoose';
-import { mUser, tAdmin } from './mClasses';
 
 // Document interface
-interface Admin {
+export interface Admin {
     id: number;
     firstName: string;
     lastName: string;
@@ -15,7 +14,7 @@ interface Admin {
     roles: [String];
 }
 
-const AdminSchema = new Schema<Admin> ({
+export const AdminSchema = new Schema<Admin> ({
     id: {type: Number, required: true, unique: true},
     firstName: {type: String, required: true},
     lastName: {type: String, required: true},
