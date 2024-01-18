@@ -39,3 +39,5 @@ export const logger = createLogger({
 logger.add(
   new transports.File({ filename: 'logs/tricky.log', level: 'error'})
 );
+
+logger.info(`Logger initialized...`);

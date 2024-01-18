@@ -1,8 +1,22 @@
 import { logger } from "./logger";
+require('dotenv').config();
+import dotenv from 'dotenv';
+import path from 'path';
 
-export const mongoUrl = 'mongodb://127.0.0.1:27017/';
-export const adminDB = 'admin';
-export const trickyDB = 'tricky';
+const envPath = path.resolve(__dirname, '/home/tim/Documents/.env');
+dotenv.config({ path: envPath });
+
+const dbHost = process.env.DB_HOST;
+const dbPort = process.env.DB_PORT;
+const dbUser = process.env.DB_USER;
+const dbPass = process.env.DB_PASS;
+
+// const connectionString = `mongodb://${dbUser}:${dbPass}@${dbHost}:${dbPort}/${dbName}`;
+
+export const mongoUrl = `mongodb://${dbUser}:${dbPass}@${dbHost}:${dbPort}/`;
+export const dbNameAdmin = process.env.DB_NAME_ADMIN;
+export const dbNameTricky = process.env.DB_NAME_TRICKY;
+
 export const adminLevel = [
     [0, `Super Admin`],
     [1, `User Admin`],

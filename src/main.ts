@@ -4,8 +4,6 @@ var http = require(`http`);
 var https = require('https');
 var fs = require('fs');
 
-import mongoose from 'mongoose';
-
 var exOptions = {
     host: '127.0.0.1',
     // key: fs.readFileSync(``)),

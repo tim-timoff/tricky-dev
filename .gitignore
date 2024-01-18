@@ -32,4 +32,5 @@ out/
 
 # Ignored files
 *.log
+.env
 npm-debug.log*

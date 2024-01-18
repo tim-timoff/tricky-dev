@@ -1,6 +1,6 @@
 import { logger } from './logger';
 import * as fs from 'fs';
-import { admClient, trickyClient } from './dp_ops';
+import { admClient, trickyClient } from './db_ops'
 
 const adminPath = './cfg/admins.json';
 
