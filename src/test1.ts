@@ -3,7 +3,7 @@ import * as fs from 'fs';
 
 const adminPath = './cfg/admins.json';
 
-let arrayOfAdmins : Array<any> = [];
+let arrayOfAdmins: Array<any> = [];
 
 try {
   const jsonStr = fs.readFileSync(adminPath, 'utf-8');
@@ -42,3 +42,9 @@ async function createUser() {
 }
 
 createUser();
+
+var adminData: any[] = [];
+
+for (const admin of arrayOfAdmins) {
+  logger.info(`Admin: ${JSON.stringify(admin)}`);
+}

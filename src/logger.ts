@@ -1,6 +1,15 @@
 import { createLogger, format, transports } from 'winston';
 const { combine, printf, errors } = format;
-import { dateFormatter } from "./mConstants";
+
+const dateFormatter = new Intl.DateTimeFormat('en-US', {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric',
+  hour: '2-digit',
+  minute: '2-digit',
+  second: '2-digit',
+  timeZoneName: 'short'
+})
 
 const mFormat = combine(
   printf(({ timestamp, level, message, metadata }) => {
@@ -10,11 +19,11 @@ const mFormat = combine(
       return `[${dateFormatter.format(timestamp)}] ${level}: ${message}`;
       }
   })
-);
+)
 
 const errorFilter = format((info, opts) => {
   return info.level === 'error' ? info : false;
-});
+})
 
 export const logger = createLogger({
   levels: {
@@ -38,6 +47,6 @@ export const logger = createLogger({
 
 logger.add(
   new transports.File({ filename: 'logs/tricky.log', level: 'error'})
-);
+)
 
 logger.info(`Logger initialized...`);

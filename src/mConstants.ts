@@ -1,19 +1,20 @@
-import { logger } from "./logger";
 require('dotenv').config();
 import dotenv from 'dotenv';
 import path from 'path';
+import { logger } from "./logger";
 
 const envPath = path.resolve(__dirname, '/home/tim/Documents/.env');
 dotenv.config({ path: envPath });
 
 const dbHost = process.env.DB_HOST;
 const dbPort = process.env.DB_PORT;
-const dbUser = process.env.DB_USER;
-const dbPass = process.env.DB_PASS;
+export const dbUser = process.env.DB_USER;
+export const dbPass = process.env.DB_PASS;
 
 // const connectionString = `mongodb://${dbUser}:${dbPass}@${dbHost}:${dbPort}/${dbName}`;
 
 export const mongoUrl = `mongodb://${dbUser}:${dbPass}@${dbHost}:${dbPort}/`;
+export const initMongoUrl = `mongodb://${dbHost}:${dbPort}/`;
 export const dbNameAdmin = process.env.DB_NAME_ADMIN;
 export const dbNameTricky = process.env.DB_NAME_TRICKY;
 
@@ -21,17 +22,7 @@ export const adminLevel = [
     [0, `Super Admin`],
     [1, `User Admin`],
     [2, `Moderator`],
-];
-
-export const dateFormatter = new Intl.DateTimeFormat('en-US', {
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric',
-    hour: '2-digit',
-    minute: '2-digit',
-    second: '2-digit',
-    timeZoneName: 'short'
-});
+]
 
 export class Like {
     private readonly desc: string;
@@ -40,7 +31,7 @@ export class Like {
     constructor (desc: string, score: number) {
         this.desc = desc;
         this.score = score;
-    };
+    }
 
     public getDesc(): string {
         return this.desc;
@@ -60,7 +51,7 @@ const vomit = new Like("vomit", -2);
 
 export const likes: Array<Like> = [
     thumbUp, lol, onFire, thumbDown, shit, vomit
-];
+]
 
 export function getLikeByDesc(s: string) {
     for (var i: number = 1; i < likes.length; i++) {
@@ -71,8 +62,8 @@ export function getLikeByDesc(s: string) {
         }
         return undefined;
     }
-};
+}
 
 export function getLikeScore(l: Like): number {
     return l.getScore();
-};
+}
