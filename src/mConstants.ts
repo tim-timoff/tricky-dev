@@ -1,7 +1,7 @@
 require('dotenv').config();
 import dotenv from 'dotenv';
 import path from 'path';
-import { logger } from "./logger";
+import logger from "./logger";
 
 const envPath = path.resolve(__dirname, '/home/tim/Documents/.env');
 dotenv.config({ path: envPath });
@@ -17,6 +17,7 @@ export const mongoUrl = `mongodb://${dbUser}:${dbPass}@${dbHost}:${dbPort}/`;
 export const initMongoUrl = `mongodb://${dbHost}:${dbPort}/`;
 export const dbNameAdmin = process.env.DB_NAME_ADMIN;
 export const dbNameTricky = process.env.DB_NAME_TRICKY;
+export const poolSize = `?minPoolSize=5&maxPoolSize=20`;
 
 export const adminLevel = [
     [0, `Super Admin`],

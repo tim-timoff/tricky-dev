@@ -1,5 +1,5 @@
 import * as bcrypt from 'bcrypt';
-import { logger } from './logger';
+import logger from './logger';
 import { adminLevel } from './mConstants';
 
 export class mUser {

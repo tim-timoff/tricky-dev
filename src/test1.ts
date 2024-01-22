@@ -1,4 +1,4 @@
-import { logger } from './logger';
+import logger from './logger';
 import * as fs from 'fs';
 
 const adminPath = './cfg/admins.json';
