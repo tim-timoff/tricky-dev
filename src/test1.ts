@@ -48,3 +48,21 @@ var adminData: any[] = [];
 for (const admin of arrayOfAdmins) {
   logger.info(`Admin: ${JSON.stringify(admin)}`);
 }
+
+// Connect to admin and tricky databases
+// Promise.all([initAdmClient.connect(), initTrickyClient.connect()])
+//   .then(() => {
+//     logger.info('Both clients connected to MongoDB');
+//     // Call the separate functions for admin and tricky
+//     return Promise.all([createAdmins(), findOrCreateTrickyDB()]);
+//   })
+//   .then(() => {
+//     logger.info('Initialization complete.');
+//     // Close the MongoDB connections
+//     return Promise.all([initAdmClient.close(), initTrickyClient.close()]);
+//   })
+//   .catch((error) => {
+//     logger.error(`Initialization failed: ${(error as Error).message}`);
+//     // Close the MongoDB connections in case of an error
+//     return Promise.all([initAdmClient.close(), initTrickyClient.close()]);
+// });
