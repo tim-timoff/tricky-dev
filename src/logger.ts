@@ -22,20 +22,23 @@ const mFormat = combine(
 )
 
 const logger: Logger = createLogger({
-  // levels: {
-  //   "info": 0,
-  //   "warn": 1,
-  //   "error": 2,
-  //   "crit": 3,
-  // },
+  levels: {
+    error: 0,
+    warn: 1,
+    info: 2,
+    http: 3,
+    verbose: 4,
+    debug: 5,
+    silly: 6
+  },
   format: mFormat,
   transports: [
-    new transports.Console(),
+    new transports.Console({ level: 'debug' }),
     new transports.File(
       { filename: 'logs/tricky.log', level: 'info', maxFiles: 10, maxsize: 1000000 }
     ),
     new transports.File(
-      { filename: 'logs/tricky_error.log', level: 'error', maxFiles: 2, maxsize: 500000}
+      { filename: 'logs/tricky_error.log', level: 'error', maxFiles: 2, maxsize: 500000 }
     )
   ]
 });

@@ -1,7 +1,8 @@
-import mongoose, { Document, model, Schema } from 'mongoose';
+import { Document, Schema, model } from 'mongoose';
+import { AdminCounter } from './counters';
 
 interface mAdminUser {
-  _id: mongoose.Types.ObjectId;
+  id: true;
   name: string;
   pass: string;
   adminId: number; // Auto-incremental ID
@@ -10,13 +11,12 @@ interface mAdminUser {
 
 const mAdminUserSchema = new Schema<mAdminUser & Document>(
   {
-    _id: { type: mongoose.Schema.Types.ObjectId, default: mongoose.Types.ObjectId },
     name: { type: String, unique: true, required: true },
     pass: { type: String, required: true },
-    adminId: { type: Number, unique: true, required: true },
-    roles: { type: [String], default: []}
+    adminId: { type: Number, unique: true },
+    roles: { type: [String], default: [] }
   },
-  { timestamps: true } // If you want to include timestamps for created and updated at
+  { timestamps: true }
 );
 
 const mAdminUserModel = model<mAdminUser & Document>('mAdminUser', mAdminUserSchema, 'users');
@@ -38,5 +38,17 @@ export const mapAppRolesToMongoDBRoles = (applicationRoles: string[]): string[] 
   return mongoDBRoles;
 };
 
+// Pre-save hook to increment adminId before saving
+mAdminUserSchema.pre('save', async function (next) 
+{  try {
+    if (!this.adminId) {
+      // Increment adminId only if it's not already set
+      this.adminId = await AdminCounter.incrementAdminCounter();
+    }
+    next();
+  } catch (error) {
+    next(error as Error);
+  }
+});
 
 export default mAdminUserModel;

@@ -1,9 +1,10 @@
 require('dotenv').config();
 import dotenv from 'dotenv';
 import path from 'path';
-import logger from "./logger";
+import logger from './logger';
 import mAdminUserModel from './mAdminUserModel';
 import { MongoClient, Db, Collection } from 'mongodb';
+import { AdminCounter } from './counters';
 
 const envPath = path.resolve(__dirname, '/home/tim/Documents/.env');
 dotenv.config({ path: envPath });
@@ -15,9 +16,11 @@ const dbPort = process.env.DB_PORT;
 const dbUser = process.env.DB_USER;
 const dbPass = process.env.DB_PASS;
 const mongoUser = process.env.DB_USER;
-const trickyUser = process.env.TR_USER;
 const mongoPass = process.env.DB_PASS;
+const mongoUserRoles = process.env.MONGO_ROLES;
+const trickyUser = process.env.TR_USER;
 const trickyPass = process.env.TR_PASS;
+const trickyUserRoles = process.env.TRICKY_ROLES;
 const dbNameAdmin = process.env.DB_NAME_ADMIN;
 const dbNameTricky = process.env.DB_NAME_TRICKY;
 const poolSize = `?minPoolSize=1&maxPoolSize=10`;
@@ -51,6 +54,7 @@ async function checkAndCountRecords(baseName: string, colName: string): Promise<
       logger.info(`Collection "${colName}" exists. Document count: ${documentCount}`);
     } else {
       logger.info(`Collection "${colName}" does not exist.`);
+      createAdmins();
     }
   } catch (error) {
     logger.error(`Error checking and counting records: ${(error as Error).message}`);
@@ -61,29 +65,19 @@ async function checkAndCountRecords(baseName: string, colName: string): Promise<
 
 checkAndCountRecords(dbNameAdmin!, "users");
 
-// async function createAdmins(): Promise<void> {
-//   const adminData = { 
-//     name: dbUser, 
-//     pass: dbPass,
-//     // Add roles based on conditions, using a regular expression to match the name
-//     roles: (adminName: string) => (/(m.*t.*c*)/.test(adminName) ? ['dbAdmin', 'readWrite'] : ['readWriteAnyDatabase', 'userAdmin'])
-//   };
-
-//   try {
-//     // Check if the admin already exists
-//     const existingAdmin = await mAdminUserModel.findOne({ name: adminData.name }).lean();
-    
-//     if (existingAdmin) {
-//       logger.info('Admin found:', existingAdmin);
-//     } else {
-//       logger.info('Admin not found. Creating...');
-
-//       // Create the admin user
-//       const newAdmin = await mAdminUserModel.create(adminData);
-//       logger.info('Admin created:', newAdmin);
-//     }
-//   } catch (error) {
-//     logger.error(`Error creating or checking admin record: ${(error as Error).message}`);
-//   }
-//   logger.info(`Admin check or create complete.`);
-// }
+async function createAdmins(): Promise<void> {
+  try {
+      var id = await AdminCounter.incrementAdminCounter();      
+      // Create the admin user
+      const newAdmin = await mAdminUserModel.create({ 
+        name: mongoUser,
+        pass: mongoPass,
+        adminId: id,
+        roles: mongoUserRoles,
+      });
+      logger.info('Admin created:', JSON.stringify(newAdmin));
+  } catch (error) {
+    logger.error(`Error creating admin record: ${(error as Error).message}`);
+  }
+  logger.info(`Admin check or create complete.`);
+}
