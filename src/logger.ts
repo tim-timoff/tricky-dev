@@ -42,14 +42,6 @@ const logger: Logger = createLogger({
     )
   ]
 });
-
-// logger.add(
-//   new transports.File({
-//     filename: 'logs/tricky.log',
-//     level: 'error',
-//     format: combine(mFormat, errors({ stack: true }))
-//   })
-// );
   
 logger.info(`Logger initialized...`);
 
