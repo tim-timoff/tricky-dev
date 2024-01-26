@@ -2,6 +2,7 @@
   "name": "tricky_english_site",
   "version": "0.1",
   "description": "Blog Web-site",
+  "type": "commonjs",
   "keywords": [
     "tricky english",
     "pre-alpha"

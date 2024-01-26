@@ -2,7 +2,7 @@ require('dotenv').config();
 import dotenv from 'dotenv';
 import path from 'path';
 import logger from './logger';
-import mAdminUserModel from './mAdminUserModel';
+import mAdminUserModel from './models/mAdminUserModel';
 import { MongoClient, Db, Collection } from 'mongodb';
 import { AdminCounter } from './counters';
 
