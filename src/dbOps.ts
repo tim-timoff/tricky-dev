@@ -23,38 +23,26 @@ const dbNameTricky = process.env.DB_NAME_TRICKY as string;
 var url = `mongodb://${dbHost}:${dbPort}/`;
 logger.debug(`Mongo url is set to: ${url}`);
 
-async function findTUser(e: string): Promise<boolean> {
-    let result = false;
-    let user = undefined;
+async function findOrCreateTUser(e: string): Promise<void> {
+    let user = null;
     await connectDB(dbNameTricky);
     var query = TestUser.findOne({ email: e });
     user = await query.exec()
-    if (user !== undefined) {
-        logger.info(`User found: ${JSON.stringify(user)}`);
-        result = true;
+    if (user !== null) {
+        logger.info(`User found: ${JSON.stringify(user)}.`);
     } else {
-        logger.info(`User with email: ${e} wasn't found.`)
-    }
-    disconnectDB;
-    return result;
-}
-
-async function createTUser(e: string) {
-    const data = { "email": e };
-    const n = new TestUser(data);
-    await connectDB(dbNameTricky);
-    const res = await findTUser(e);
-    logger.debug(`Find test user result: ${res}`);
-    if (res == false) {
+        logger.info(`User with email: ${e} wasn't found. Creating...`);
+        const link = TestUser.getEmailConfirmationLink();
+        const data = { "email": e };
+        const n = new TestUser(data);
         try {
             await n.save();
             logger.info(`Test user: ${JSON.stringify(n)} created with ${JSON.stringify(data)}.`);
         } catch (err) {
             logger.error(`Error creating test user: ${(err as Error).message}`);
         }
-    } else {
-        await disconnectDB();
     }
+    disconnectDB;
 }
 
 async function connectDB(dbName: string) {
@@ -64,8 +52,9 @@ async function connectDB(dbName: string) {
 }
 
 async function disconnectDB() {
+    mongoose.connection.close;
     mongoose.disconnect;
     logger.debug(`Disconnected from database...`);
 }
 
-createTUser("y.timoshenkoff@yandex.ru");
+findOrCreateTUser("y.timoshenkoff@yandex.ru");
