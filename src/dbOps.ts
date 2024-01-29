@@ -4,6 +4,7 @@ require('dotenv').config();
 import dotenv from 'dotenv';
 import path from 'path';
 import { TestUser } from './models/mTestUserModel';
+import { log } from 'winston';
 
 const envPath = path.resolve(__dirname, '/home/tim/Documents/.env');
 dotenv.config({ path: envPath });
@@ -19,6 +20,8 @@ const poolSize = `?minPoolSize=1&maxPoolSize=10`;
 const dbNameAdmin = process.env.DB_NAME_ADMIN as string;
 const dbNameTricky = process.env.DB_NAME_TRICKY as string;
 
+logger.debug(`Database name read is: ${dbNameTricky}`);
+
 // This is to be transferred later to another module
 var url = `mongodb://${dbHost}:${dbPort}/`;
 logger.debug(`Mongo url is set to: ${url}`);
@@ -33,8 +36,9 @@ async function findOrCreateTUser(e: string): Promise<void> {
     } else {
         logger.info(`User with email: ${e} wasn't found. Creating...`);
         const link = TestUser.getEmailConfirmationLink();
-        const data = { "email": e };
+        const data = { "email": e, "emailConfirmationLink": link };
         const n = new TestUser(data);
+        n.updateOne({emailConfirmationLink: link});
         try {
             await n.save();
             logger.info(`Test user: ${JSON.stringify(n)} created with ${JSON.stringify(data)}.`);
@@ -46,14 +50,12 @@ async function findOrCreateTUser(e: string): Promise<void> {
 }
 
 async function connectDB(dbName: string) {
-    await mongoose.connect(url);
-    mongoose.connection.useDb(dbName);
+    await mongoose.connect(url + dbName);
     logger.debug(`Connected to database ${dbName}`);
 }
 
 async function disconnectDB() {
-    mongoose.connection.close;
-    mongoose.disconnect;
+    mongoose.disconnect().then
     logger.debug(`Disconnected from database...`);
 }
 

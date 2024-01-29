@@ -14,7 +14,7 @@ interface mTestUserModel extends Model<mTestUser> {
   getEmailConfirmationLink(): string;
 }
 
-const mTestUserSchema = new Schema<mTestUser, mTestUserModel>(
+const mTestUserSchema: Schema<mTestUser, mTestUserModel> = new Schema(
   {
     email: { type: String, required: true, unique: true, default: "Ваш электронный адрес", index: 1 },
     emailConfirmed: { type: Boolean, default: false },
@@ -24,19 +24,15 @@ const mTestUserSchema = new Schema<mTestUser, mTestUserModel>(
         sent: { type: Boolean, default: false },
         date: { type: Date, default: new Date('2023-01-01T00:00:00Z+7') }
       }
-    ]
+    ],
   },
   { timestamps: true }
 );
 
-mTestUserSchema.static('getEmailConfirmationLink', ( ) : string =>  {
+mTestUserSchema.statics.getEmailConfirmationLink = (): string =>  {
   const t = getRandomToken(12);
-  logger.debug(`Token received: ${t}`);
-  return t;
-});
+    logger.debug(`Token received: ${t}`);
+    return t;
+  }
 
-// userSchema.static('hashPassword', (password: string): string => {
-//   return bcrypt.hashSync(password);
-// });
-
-export const TestUser = model<mTestUser>('testUser', mTestUserSchema, 'testUser');
+export const TestUser = model<mTestUser, mTestUserModel>('testUser', mTestUserSchema, 'testUser');
