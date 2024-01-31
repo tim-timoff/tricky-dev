@@ -37,7 +37,7 @@ async function sendEmail(): Promise<boolean> {
           </style>
         </head>
         <body>
-          <h1>Hello, this is a styled email!</h1>
+          <h1>Hello, this is a styled email again!</h1>
           <p>Additional content goes here.</p>
         </body>
       </html>

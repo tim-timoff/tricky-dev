@@ -3,8 +3,8 @@ import mongoose from 'mongoose';
 require('dotenv').config();
 import dotenv from 'dotenv';
 import path from 'path';
+import { MongoClient, Db, Collection } from 'mongodb';
 import { TestUser } from './models/mTestUserModel';
-import { log } from 'winston';
 
 const envPath = path.resolve(__dirname, '/home/tim/Documents/.env');
 dotenv.config({ path: envPath });
@@ -26,7 +26,7 @@ logger.debug(`Database name read is: ${dbNameTricky}`);
 var url = `mongodb://${dbHost}:${dbPort}/`;
 logger.debug(`Mongo url is set to: ${url}`);
 
-async function findOrCreateTUser(e: string): Promise<void> {
+export async function findOrCreateTUser(e: string): Promise<void> {
     let user = null;
     await connectDB(dbNameTricky);
     var query = TestUser.findOne({ email: e });
@@ -38,7 +38,7 @@ async function findOrCreateTUser(e: string): Promise<void> {
         const link = TestUser.getEmailConfirmationLink();
         const data = { "email": e, "emailConfirmationLink": link };
         const n = new TestUser(data);
-        n.updateOne({emailConfirmationLink: link});
+        n.updateOne({ emailConfirmationLink: link });
         try {
             await n.save();
             logger.info(`Test user: ${JSON.stringify(n)} created with ${JSON.stringify(data)}.`);
@@ -59,4 +59,35 @@ async function disconnectDB() {
     logger.debug(`Disconnected from database...`);
 }
 
-findOrCreateTUser("y.timoshenkoff@yandex.ru");
+export async function checkAndCountRecords(baseName: string, colName: string): Promise<number> {
+    const mUrl = url + baseName;
+    logger.info(`Trying to connect to ${mUrl}...`)
+    const client = new MongoClient(mUrl);
+    let documentCount = 0;
+
+    try {
+        await client.connect();
+
+        let database: Db = client.db(baseName);
+        const collections = await database.listCollections().toArray();
+
+        // Check if the collection exists
+        const collectionExists = collections.some((coll) => coll.name === colName);
+
+        if (collectionExists) {
+            const collection: Collection = database.collection(colName);
+
+            // Get the document count in the collection
+            documentCount = await collection.countDocuments();
+
+            logger.info(`Collection "${colName}" exists. Document count: ${documentCount}`);
+        } else {
+            logger.info(`Collection "${colName}" does not exist.`);
+        }
+    } catch (error) {
+        logger.error(`Error checking and counting records: ${(error as Error).message}`);
+    } finally {
+        await client.close();
+    }
+    return documentCount;
+}

@@ -1,5 +1,5 @@
 import { Document, Schema, model } from 'mongoose';
-import { AdminCounter } from '../counters';
+import { Counter } from '../counters';
 
 interface mAdminUser {
   id: true;
@@ -43,7 +43,7 @@ mAdminUserSchema.pre('save', async function (next)
 {  try {
     if (!this.adminId) {
       // Increment adminId only if it's not already set
-      this.adminId = await AdminCounter.incrementAdminCounter();
+      this.adminId = await Counter.incrementAdminCounter();
     }
     next();
   } catch (error) {
