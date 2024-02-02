@@ -12,6 +12,7 @@ interface mTestUser {
 
 interface mTestUserModel extends Model<mTestUser> {
   getEmailConfirmationLink(): string;
+  findByEmail(email: string): Promise<mTestUser | null>;
 }
 
 const mTestUserSchema: Schema<mTestUser, mTestUserModel> = new Schema(
@@ -29,10 +30,20 @@ const mTestUserSchema: Schema<mTestUser, mTestUserModel> = new Schema(
   { timestamps: true }
 );
 
-mTestUserSchema.statics.getEmailConfirmationLink = (): string =>  {
+mTestUserSchema.statics.getEmailConfirmationLink = (): string => {
   const t = getRandomToken(12);
-    logger.debug(`Token received: ${t}`);
-    return t;
+  logger.debug(`Token received: ${t}`);
+  return t;
+}
+
+mTestUserSchema.statics.findByEmail = async function (email: string): Promise<mTestUser | null> {
+  try {
+    const user = await this.findOne({ email }).exec();
+    return user;
+  } catch (error) {
+    logger.error(`Error finding user by email: ${(error as Error).message}`);
+    return null;
   }
+}
 
 export const TestUser = model<mTestUser, mTestUserModel>('testUser', mTestUserSchema, 'testUser');

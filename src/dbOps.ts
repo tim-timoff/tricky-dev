@@ -55,13 +55,13 @@ async function connectDB(dbName: string) {
 }
 
 async function disconnectDB() {
-    mongoose.disconnect().then
+    await mongoose.disconnect();
     logger.debug(`Disconnected from database...`);
 }
 
 export async function checkAndCountRecords(baseName: string, colName: string): Promise<number> {
     const mUrl = url + baseName;
-    logger.info(`Trying to connect to ${mUrl}...`)
+    logger.debug(`Trying to connect to ${mUrl}...`)
     const client = new MongoClient(mUrl);
     let documentCount = 0;
 
@@ -70,16 +70,13 @@ export async function checkAndCountRecords(baseName: string, colName: string): P
 
         let database: Db = client.db(baseName);
         const collections = await database.listCollections().toArray();
-
         // Check if the collection exists
         const collectionExists = collections.some((coll) => coll.name === colName);
 
         if (collectionExists) {
             const collection: Collection = database.collection(colName);
-
             // Get the document count in the collection
             documentCount = await collection.countDocuments();
-
             logger.info(`Collection "${colName}" exists. Document count: ${documentCount}`);
         } else {
             logger.info(`Collection "${colName}" does not exist.`);
@@ -91,3 +88,5 @@ export async function checkAndCountRecords(baseName: string, colName: string): P
     }
     return documentCount;
 }
+
+// const tU = findOrCreateTUser("tim.timoff@gmail.com");

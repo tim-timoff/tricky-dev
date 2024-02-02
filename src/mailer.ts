@@ -1,58 +1,50 @@
 import nodemailer from 'nodemailer';
-import logger from './logger'; 
+import logger from './logger';
 require('dotenv').config();
 import dotenv from 'dotenv';
 import path from 'path';
+import { c } from './counters';
+import { checkAndCountRecords } from './dbOps';
+import { TestUser } from './models/mTestUserModel';
+import { composeEmail } from './emails/testUserEmails';
 
 const envPath = path.resolve(__dirname, '/home/tim/Documents/.env');
 dotenv.config({ path: envPath });
+const counter = c;
 
 const acc = process.env.MAIL_ACC;
 const pass = process.env.MAIL_PASS;
 const addr = process.env.MAIL_NOREPLY;
+const dbNameTricky = process.env.DB_NAME_TRICKY as string;
 
-async function sendEmail(): Promise<boolean> {
+var htmlContent: string;
+
+// Create a Nodemailer transporter
+function getTrasnporter(): nodemailer.Transporter {
+  const transporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+      user: acc,
+      pass: pass,
+    },
+  });
+  return transporter;
+}
+
+async function sendEmail(from: string, to: string, subj: string, html: string): Promise<boolean> {
   try {
-    // Create a Nodemailer transporter
-    const transporter = nodemailer.createTransport({
-      service: 'gmail',
-      auth: {
-        user: acc,
-        pass: pass,
-      },
-    });
-
-    // HTML content for the email
-    const htmlContent = `
-      <html>
-        <head>
-          <style>
-            /* Your CSS styles here */
-            body {
-              font-family: Arial, sans-serif;
-            }
-            h1 {
-              color: #3498db;
-            }
-          </style>
-        </head>
-        <body>
-          <h1>Hello, this is a styled email again!</h1>
-          <p>Additional content goes here.</p>
-        </body>
-      </html>
-    `;
+    const t = getTrasnporter();
 
     // Options for the email
     const mailOptions: nodemailer.SendMailOptions = {
-      from: addr,
-      to: 'tim.timoff@gmail.com',
-      subject: 'Styled Email',
-      html: htmlContent,
-    }; 
+      from: from,
+      to: to,
+      subject: subj,
+      html: html,
+    };
 
     // Send the email
-    const info = await transporter.sendMail(mailOptions);
+    const info = await t.sendMail(mailOptions);
 
     logger.info(`Email sent: ${info.messageId}`);
     return true;
@@ -63,6 +55,24 @@ async function sendEmail(): Promise<boolean> {
   }
 }
 
+async function sendEmailConfirmationLink(email: string) : Promise<boolean> {
+  let res = false;
+  if (await checkAndCountRecords(dbNameTricky, 'testUser') == 0) {
+    logger.info(`Test users collection is empty`);
+  } else {
+    const u = await TestUser.findByEmail(email)
+    if (u) {
+      logger.info(`User fatched from db: ${JSON.stringify(u)}`);
+      return true;
+    } else {
+      logger.warn(`Failed to find test user with email: ${email}`);
+    }
+  }
+  return res;
+}
+
+sendEmailConfirmationLink("tim.timoff@gmail.com");
+
 // Invoke the function to send the email
-const result = sendEmail().then
-logger.info(`Sendmail result: ${result}`);
+// const result = sendEmail().then
+// logger.info(`Sendmail result: ${result}`);

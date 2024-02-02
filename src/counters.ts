@@ -41,7 +41,7 @@ export class Counter {
                 this.gmailCounter = counters.gmailCounter.notifications || 0;
                 // checking other counters with database
                 this.admCounter = await checkAndCountRecords(dbNameAdmin as string, 'users');
-                this.userCounter = await checkAndCountRecords(dbNameTricky as string, 'tUsers');          
+                this.userCounter = await checkAndCountRecords(dbNameTricky as string, 'testUsers');          
             } else {
                 // File doesn't exist, initialize counters
                 this.admCounter = 0;
@@ -90,17 +90,18 @@ export class Counter {
         return counterInstance.userCounter;
     }
 
+    // Static method to increment gmail counter
     static async incrementGmailCounter(): Promise<number> {
         const counterInstance = new Counter();
         const diff = counterInstance.curDate.getTime() - counterInstance.fileDate!.getTime();
         const hourDiff = diff/(1000*60*60);
         if (hourDiff > 24) {
             // resetting the gmail.counter
-            logger.debug (`Gmail counter: the difference with the file date is over ${hourDiff}. Resetting...`)
+            logger.debug (`Gmail counter: the difference with the file date is over ${hourDiff}. Resetting...`);
             counterInstance.gmailCounter.counter = 1;
         } else {
             counterInstance.gmailCounter.counter++;
-            logger.debug (`Gmail counter: the difference with the file date is ${hourDiff}. Incrementing...`)
+            logger.debug (`Gmail counter: the difference with the file date is ${hourDiff}. Incrementing...`);
         }
         counterInstance.gmailCounter.date = counterInstance.curDate;
         await counterInstance.saveCounters();
@@ -108,4 +109,4 @@ export class Counter {
     }
 }
 
-var c = new Counter();
+export const c = new Counter();

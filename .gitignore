@@ -22,8 +22,9 @@ pids
 # Output of 'npm pack'
 *.tgz
 
-# Stores VSCode versions used for testing VSCode extensions
+# Stores VSCode output and options
 .vscode-test
+.vscode/
 
 # Ignored directories
 node_modules/
@@ -34,3 +35,4 @@ out/
 *.log
 .env
 npm-debug.log*
+cfg/counters.json
