@@ -3,19 +3,21 @@ import logger from './logger';
 require('dotenv').config();
 import dotenv from 'dotenv';
 import path from 'path';
-import { c } from './counters';
-import { checkAndCountRecords } from './dbOps';
 import { TestUser } from './models/mTestUserModel';
 import { composeEmail } from './emails/testUserEmails';
+import { emailMessageType, emailSubjectType, getEmailSubjectString } from './mConstants';
+import mongoose from 'mongoose';
 
 const envPath = path.resolve(__dirname, '/home/tim/Documents/.env');
 dotenv.config({ path: envPath });
-const counter = c;
 
 const acc = process.env.MAIL_ACC;
 const pass = process.env.MAIL_PASS;
-const addr = process.env.MAIL_NOREPLY;
+const addr = process.env.MAIL_NOREPLY as string;
 const dbNameTricky = process.env.DB_NAME_TRICKY as string;
+const mong = process.env.MONGO_URI + dbNameTricky;
+
+logger.debug(`Mongo uri defined like: ${mong}`);
 
 var htmlContent: string;
 
@@ -55,23 +57,28 @@ async function sendEmail(from: string, to: string, subj: string, html: string): 
   }
 }
 
-async function sendEmailConfirmationLink(email: string) : Promise<boolean> {
+async function sendEmailConfirmationLink(email: string): Promise<boolean> {
   let res = false;
-  if (await checkAndCountRecords(dbNameTricky, 'testUser') == 0) {
-    logger.info(`Test users collection is empty`);
-  } else {
-    const u = await TestUser.findByEmail(email)
-    if (u) {
-      logger.info(`User fatched from db: ${JSON.stringify(u)}`);
-      return true;
+  await mongoose.connect(mong);
+  const u = await TestUser.findByEmail(email);
+  if (u) {
+    logger.info(`User with email ${email} has been fetched from db.`);
+    // Now sending the email
+    const t = composeEmail(emailMessageType.testUserEmailConfirmationLink, u);
+    if (t) {
+      sendEmail(addr, u.email, getEmailSubjectString(emailSubjectType.actionRequired), t);
+      logger.info('Sending email confirmation link succeded');
     } else {
-      logger.warn(`Failed to find test user with email: ${email}`);
+      logger.info('Sending email confirmation link failed');
     }
+    res = true;
+  } else {
+    logger.warn(`Failed to find test user with email: ${email}`);
   }
   return res;
 }
 
-sendEmailConfirmationLink("tim.timoff@gmail.com");
+const result = sendEmailConfirmationLink("tim.timoff@gmail.com");
 
 // Invoke the function to send the email
 // const result = sendEmail().then

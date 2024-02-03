@@ -27,7 +27,7 @@ const mTestUserSchema: Schema<mTestUser, mTestUserModel> = new Schema(
       }
     ],
   },
-  { timestamps: true }
+  { timestamps: true, collection: 'testUser' }
 );
 
 mTestUserSchema.statics.getEmailConfirmationLink = (): string => {
@@ -36,12 +36,13 @@ mTestUserSchema.statics.getEmailConfirmationLink = (): string => {
   return t;
 }
 
-mTestUserSchema.statics.findByEmail = async function (email: string): Promise<mTestUser | null> {
+mTestUserSchema.statics.findByEmail = async function (em: string): Promise<mTestUser | null> {
   try {
-    const user = await this.findOne({ email }).exec();
+    const user = await this.findOne({ email: em });
+    logger.debug(`User found by static method: ${JSON.stringify(user)}.`);
     return user;
   } catch (error) {
-    logger.error(`Error finding user by email: ${(error as Error).message}`);
+    logger.error(`Error finding user by email by static method: ${(error as Error).message}`);
     return null;
   }
 }

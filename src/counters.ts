@@ -41,7 +41,7 @@ export class Counter {
                 this.gmailCounter = counters.gmailCounter.notifications || 0;
                 // checking other counters with database
                 this.admCounter = await checkAndCountRecords(dbNameAdmin as string, 'users');
-                this.userCounter = await checkAndCountRecords(dbNameTricky as string, 'testUsers');          
+                this.userCounter = await checkAndCountRecords(dbNameTricky as string, 'testUser');          
             } else {
                 // File doesn't exist, initialize counters
                 this.admCounter = 0;

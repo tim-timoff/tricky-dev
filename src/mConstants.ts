@@ -31,6 +31,10 @@ export enum emailMessageType {
     testUserEmailConfirmation,
 }
 
+export enum emailSubjectType {
+    actionRequired,
+}
+
 export class Like {
     private readonly desc: string;
     private readonly score: number;
@@ -73,4 +77,15 @@ export function getLikeByDesc(s: string) {
 
 export function getLikeScore(l: Like): number {
     return l.getScore();
+}
+
+export function getEmailSubjectString(subj: emailSubjectType): string {
+    let result = "";
+    switch (subj) {
+        case (emailSubjectType.actionRequired): {
+            result = "Требуется ваше действие";
+            break;
+        }
+    }
+    return result;
 }

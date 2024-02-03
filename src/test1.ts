@@ -66,3 +66,21 @@ for (const admin of arrayOfAdmins) {
 //     // Close the MongoDB connections in case of an error
 //     return Promise.all([initAdmClient.close(), initTrickyClient.close()]);
 // });
+
+// mongoose.connection.on('open', () => {
+//   logger.debug(`Mongoose connected!`);
+// })
+
+// mongoose.connection.on('close', () => {
+//   logger.debug(`Disconnected`);
+
+// })
+
+// async function test(): Promise<void> {
+//   mongoose.connect(`mongodb://127.0.0.1:27017/tricky`);
+//   const me = await TestUser.findByEmail("tim.timoff@gmail.com");
+//   logger.debug(`Me: ${JSON.stringify(me)}`);
+//   mongoose.disconnect();
+// }
+
+// test();

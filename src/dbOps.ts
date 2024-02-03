@@ -24,13 +24,13 @@ logger.debug(`Database name read is: ${dbNameTricky}`);
 
 // This is to be transferred later to another module
 var url = `mongodb://${dbHost}:${dbPort}/`;
-logger.debug(`Mongo url is set to: ${url}`);
+// logger.debug(`Mongo url is set to: ${url}`);
 
 export async function findOrCreateTUser(e: string): Promise<void> {
     let user = null;
     await connectDB(dbNameTricky);
     var query = TestUser.findOne({ email: e });
-    user = await query.exec()
+    user = await query.exec();
     if (user !== null) {
         logger.info(`User found: ${JSON.stringify(user)}.`);
     } else {
@@ -84,7 +84,8 @@ export async function checkAndCountRecords(baseName: string, colName: string): P
     } catch (error) {
         logger.error(`Error checking and counting records: ${(error as Error).message}`);
     } finally {
-        await client.close();
+        client.close().then
+        logger.debug(`Check & Count collection ${colName} completed.`);
     }
     return documentCount;
 }

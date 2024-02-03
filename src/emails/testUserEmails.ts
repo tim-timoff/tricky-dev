@@ -23,17 +23,18 @@ const htmlContent = `
 `;
 
 // Composing email content
-export function composeEmail(type: emailMessageType, recipient: string) {
+export function composeEmail(type: emailMessageType, recipient: any) {
   let result = 'failed';
   switch (type) {
     case emailMessageType.testUserEmailConfirmationLink: {
       const insertAfter = '</h4>';
       const pos = findPosition(htmlContent, insertAfter);
-      const email = recipient;
+      const email = recipient.email;
       if (pos !== -1) {
         logger.debug(`Substring found at position ${pos}.`);
         // Here goes the message
-        const insert = `<p>Вы получили это сообщение, потому что Ваш электронный адрес ${email} был использован для регистрации на сайте Tricky English. Если вы этого не делали, то вы можете удалить свой электронный адрес из нашей базы по этой <a href="">ссылке</a><br>. Если же это были Вы, то, пожалуйсте, подтвердите свой электронный адрес по этой <a href="">ссылке</a>.</p>`;
+        const insert = `<p>Вы получили это сообщение, потому что Ваш электронный адрес ${email} был использован для регистрации на сайте Tricky English. Если вы этого не делали, то вы можете удалить свой электронный адрес из нашей базы по этой <a href="">ссылке</a><br>. Если же это были Вы, то, пожалуйсте, подтвердите свой электронный адрес по этой <a href="http://trickyenglish.media/tu/emailconfirmation?u="${recipient.ObjectId}"&l="${recipient.emailConfirmationLink}"/">ссылке</a>.</p>`;
+        // TODO resulted link is pretty bad: http://http//trickyenglish.media/tu/emailconfirmation?u= 
         result = insertText(htmlContent, pos, insert);
         logger.debug(`Message composed: ${result}`)
       } else {
