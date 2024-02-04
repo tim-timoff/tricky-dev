@@ -35,5 +35,5 @@ out/
 *.log
 .env
 npm-debug.log*
-cfg/counters.jsoncfg/counters.json
+cfg/counters.json
 package-lock.json

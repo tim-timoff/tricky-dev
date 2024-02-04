@@ -17,7 +17,7 @@ const addr = process.env.MAIL_NOREPLY as string;
 const dbNameTricky = process.env.DB_NAME_TRICKY as string;
 const mong = process.env.MONGO_URI + dbNameTricky;
 
-logger.debug(`Mongo uri defined like: ${mong}`);
+logger.debug(`Mongo uri defined like: ${mong}, no replay is read as: ${addr}`);
 
 var htmlContent: string;
 
@@ -36,6 +36,7 @@ function getTrasnporter(): nodemailer.Transporter {
 async function sendEmail(from: string, to: string, subj: string, html: string): Promise<boolean> {
   try {
     const t = getTrasnporter();
+    logger.debug(`From address is set to: ${from}`);
 
     // Options for the email
     const mailOptions: nodemailer.SendMailOptions = {
@@ -77,6 +78,8 @@ async function sendEmailConfirmationLink(email: string): Promise<boolean> {
   }
   return res;
 }
+
+// result link: http://trickyenglish.media/tu/emailconfirmation?u=65bc849dc68a11501cb28ca2&l=EkJRyodXzoQU
 
 const result = sendEmailConfirmationLink("tim.timoff@gmail.com");
 

@@ -1,4 +1,4 @@
-import mongoose, { Schema, Model, model } from 'mongoose';
+import { Schema, Model, model, Types } from 'mongoose';
 import { getRandomToken } from '../mFunctions';
 import logger from '../logger';
 
@@ -46,5 +46,10 @@ mTestUserSchema.statics.findByEmail = async function (em: string): Promise<mTest
     return null;
   }
 }
+
+// Instance method to get ObjectId
+mTestUserSchema.methods.getObjectId = function (): Types.ObjectId {
+  return this._id;
+};
 
 export const TestUser = model<mTestUser, mTestUserModel>('testUser', mTestUserSchema, 'testUser');
