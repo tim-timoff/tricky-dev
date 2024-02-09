@@ -31,8 +31,16 @@
 		nginx -v
 		ps -ef | grep nginx
 	1.5. Отключаем default конфигурацию, закомментив все строчки в /etc/nginx/conf.d/default.conf
+	1.6. Создаём пользователя nginx_usr, добавляя его в группы tim и nginx
+		sudo useradd -M -G tim,nginx nginx_usr
+			Задаём пароль (из файла .env):
+		sudo passwd nginx_usr
+			
 	1.6. Заставляем nginx работать с нашей конфигурацией:
 		sudo nginx -c /var/www/tricky/cfg/nginx.conf
+		sudo systemctl -reload nginx
+			или
+		sudo nginx -s reload -c /var/www/tricky/cfg/nginx.conf
 2. Устанавливаем NodeJS:
 	2.1. Сначала устанавливаем Development Tools:
 		sudo dnf groupinstall "Development Tools"

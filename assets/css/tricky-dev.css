@@ -67,5 +67,11 @@ img {
 .email {
   color: #101a79;
 }
+
+.icon-big {
+  font-size: 250px;
+  color: var(--not-ok);
+}
+
   
 

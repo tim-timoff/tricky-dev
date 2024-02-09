@@ -7,6 +7,7 @@ import { TestUser } from './models/mTestUserModel';
 import { composeEmail } from './emails/testUserEmails';
 import { emailMessageType, emailSubjectType, getEmailSubjectString } from './mConstants';
 import mongoose from 'mongoose';
+import { getMongoUri } from './resolver';
 
 const envPath = path.resolve(__dirname, '/home/tim/Documents/.env');
 dotenv.config({ path: envPath });
@@ -15,7 +16,7 @@ const acc = process.env.MAIL_ACC;
 const pass = process.env.MAIL_PASS;
 const addr = process.env.MAIL_NOREPLY as string;
 const dbNameTricky = process.env.DB_NAME_TRICKY as string;
-const mong = process.env.MONGO_URI + dbNameTricky;
+const mong = getMongoUri() + dbNameTricky;
 
 logger.debug(`Mongo uri defined like: ${mong}, no replay is read as: ${addr}`);
 

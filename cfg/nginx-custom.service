@@ -1,0 +1,15 @@
+[Unit]
+Description=Nginx Custom Configuration
+After=network.target
+
+[Service]
+ExecStart=/usr/sbin/nginx -c /var/www/tricky/cfg/nginx.conf
+ExecReload=/usr/sbin/nginx -s reload -c /var/www/tricky/cfg/nginx.conf
+ExecStop=/bin/kill -s QUIT $MAINPID
+Restart=always
+RestartSec=3
+User=nginx
+Group=nginx
+
+[Install]
+WantedBy=multi-user.target

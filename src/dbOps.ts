@@ -1,18 +1,13 @@
 import logger from './logger';
 import mongoose from 'mongoose';
-require('dotenv').config();
-import dotenv from 'dotenv';
-import path from 'path';
 import { MongoClient, Db, Collection } from 'mongodb';
 import { TestUser } from './models/mTestUserModel';
-
-const envPath = path.resolve(__dirname, '/home/tim/Documents/.env');
-dotenv.config({ path: envPath });
+import { getDBHost, getDBPort} from './resolver';
 
 // const connectionString = `mongodb://${dbUser}:${dbPass}@${dbHost}:${dbPort}/${dbName}`;
 
-const dbHost = process.env.DB_HOST as string;
-const dbPort = process.env.DB_PORT as string;
+const dbHost = getDBHost();
+const dbPort = getDBPort();
 
 const initMongoUrl = `mongodb://${dbHost}:${dbPort}/`;
 const poolSize = `?minPoolSize=1&maxPoolSize=10`;

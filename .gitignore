@@ -36,4 +36,5 @@ out/
 .env
 npm-debug.log*
 cfg/counters.json
+cfg/nginx-custom.service
 package-lock.json
