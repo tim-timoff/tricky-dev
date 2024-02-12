@@ -1,6 +1,19 @@
 import * as bcrypt from 'bcrypt';
 import logger from './logger';
 
+// Finding where to insert data
+export function findPosition(originalString: string, substring: string): number {
+  return originalString.indexOf(substring);
+}
+
+// Inserting text and data
+export function insertText(original: string, pos: number, insert: string): string {
+  const start = original.slice(0, pos);
+  const end = original.slice(pos);
+  const modifiedString = start + insert + end;
+  return modifiedString;
+}
+
 export class mImage {
   private path: string;
   private title: string | undefined;

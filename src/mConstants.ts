@@ -19,11 +19,6 @@ export const dbNameAdmin = process.env.DB_NAME_ADMIN;
 export const dbNameTricky = process.env.DB_NAME_TRICKY;
 export const poolSize = `?minPoolSize=5&maxPoolSize=20`;
 
-// Initial link to TE avatar: https://drive.google.com/file/d/1xIedJPhptTq52BU3c0Tvid12fQ73zlC6/view?usp=drive_link
-// Sample for the modified Google Drive url: https://drive.google.com/uc?id=your-file-id
-// TODO Both Google Drive adn Flickr don't work for email avatar or favicon
-// export const avatarLinkGDrive = 'https://drive.google.com/uc?id=1xIedJPhptTq52BU3c0Tvid12fQ73zlC6/'; // Doesn't work
-
 export enum adminLevel { SuperAdmin, UserAdmin, Moderator }
 
 export enum emailMessageType {

@@ -24,7 +24,6 @@
 		sudo yum -y install nginx
 	1.3. После установки:
 		sudo systemctl enable nginx
-		sudo systemctl start nginx
 		sudo firewall-cmd --permanent --zone=public --add-port=80/tcp
 		sudo firewall-cmd --reload
 	1.4. Проверяем установку:
@@ -35,12 +34,16 @@
 		sudo useradd -M -G tim,nginx nginx_usr
 			Задаём пароль (из файла .env):
 		sudo passwd nginx_usr
-			
-	1.6. Заставляем nginx работать с нашей конфигурацией:
+	1.7. Проверяем, установлено ли для наших папок: httpd_enable_homedirs
+		getsebool -a | grep httpd
+	     Если httpd_enable_homedirs --> off, то
+	     	sudo setsebool -P httpd_enable_homedirs 1
+	1.8. Заставляем nginx работать с нашей конфигурацией:
 		sudo nginx -c /var/www/tricky/cfg/nginx.conf
 		sudo systemctl -reload nginx
 			или
 		sudo nginx -s reload -c /var/www/tricky/cfg/nginx.conf
+		sudo systemctl start nginx -c /var/www/tricky/cfg/nginx.conf
 2. Устанавливаем NodeJS:
 	2.1. Сначала устанавливаем Development Tools:
 		sudo dnf groupinstall "Development Tools"

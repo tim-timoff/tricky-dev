@@ -9,6 +9,7 @@ ExecStop=/bin/kill -s QUIT $MAINPID
 Restart=always
 RestartSec=3
 User=nginx
+# User=nginx_usr
 Group=nginx
 
 [Install]

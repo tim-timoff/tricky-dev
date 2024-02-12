@@ -1,5 +1,6 @@
 import logger from "../logger";
 import { emailMessageType } from "../mConstants";
+import { findPosition, insertText } from "src/mFunctions";
 
 
 // sample HTML content for the email
@@ -55,17 +56,4 @@ export function composeEmail(type: emailMessageType, recipient: any) {
     }
   }
   return result;
-}
-
-// Finding where to insert data
-function findPosition(originalString: string, substring: string): number {
-  return originalString.indexOf(substring);
-}
-
-// Inserting text and data
-function insertText(original: string, pos: number, insert: string): string {
-  const start = original.slice(0, pos);
-  const end = original.slice(pos);
-  const modifiedString = start + insert + end;
-  return modifiedString;
 }
