@@ -67,6 +67,8 @@ export function getMongoUri() {
 // URL resolver function
 export function urlResolver(type: string, params: any): string {
     switch (type) {
+        case '/':
+            return `Homepage requested`;
         case 'p':
             return `Post ID: ${params.id}`;
         case 'refresh':

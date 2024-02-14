@@ -15,29 +15,19 @@ var exOptions = {
     // cert: fs.readFileSync(``))
 }
 
+logger.debug(`Host is set to ${exOptions.host}`);
+
 http.createServer(app);
 // https.createServer(exOptions, app).listen(443);
 
 // setting the view engine to ejs
-app.set('view engine', 'ejs')
+app.set('view engine', 'ejs');
 
 logger.debug(`View engine: ${app.get('view engine')}`);
 
-// Single route handler
-app.get('/:type', (req, res) => {
-  const type = req.params.type; // Retrieve the 'type' parameter from the URL
-  const queryParams = req.query; // Retrieve all query parameters
-  logger.debug(`Retrieved type of request: ${type} and parameters: ${queryParams}.`);
-
-  // Call the resolver function to determine the appropriate action
-  const result = urlResolver(type, queryParams);
-  logger.debug(`Resolver response is: ${result}`);
-
-  // Pass the result to the HTML builder module
-  // const html = buildHtml(result);
-  const html = "<div>Test response from Express server</div>";
-
-  // Send the HTML response
+app.get('/', (req, res) => {
+  const url = '/';
+  const html = urlResolver(url, []);
   res.send(html);
 });
 
@@ -45,4 +35,4 @@ app.get('/:type', (req, res) => {
 const portNow = getPort();
 logger.info(`Startin server on port ${portNow}`);
 app.listen(getPort());
-app.listen(getAdminPort());
+// app.listen(getAdminPort());
