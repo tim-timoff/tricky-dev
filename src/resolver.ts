@@ -67,21 +67,9 @@ export function getMongoUri() {
 // URL resolver function
 export function urlResolver(type: string, params: any): string {
     switch (type) {
-        case '/':
-            return `Homepage requested`;
-        case 'p':
-            return `Post ID: ${params.id}`;
-        case 'refresh':
-            return `Refreshing post ID: ${params.id} in mode: ${params.mode}`;
-        case 'tu/emailconfirmation':
-            return `TestUser email Confirmation: Test User ID: ${params.u}, Link: ${params.l}`;
-        case 'u':
-            return `User ID: ${params.id}`;
-        case 'notify':
-            return `Notify user ID: ${params.u} at position: ${params.pos}`;
-        case 'c':
-            return `Comment ID: ${params.id}, View Order: ${params.view}`;
-        default:
-            return 'Unknown URL type';
+        case 'welcome':
+            return "slug";
     }
+    logger.warn(`Url wasn't resolved: ${type}`);
+    return "";
 }
