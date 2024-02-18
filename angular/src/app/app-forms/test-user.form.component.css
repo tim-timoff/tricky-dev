@@ -1,0 +1,51 @@
+.paper-form {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .cut-input {
+    position: relative;
+    margin-bottom: 20px;
+  }
+  
+  .cut-input input {
+    border: none;
+    border-bottom: 1px solid #ccc;
+    outline: none;
+    width: 100%;
+    padding: 10px;
+  }
+  
+  .cut-input input:focus {
+    background-color: lightyellow;
+  }
+  
+  .cut-input input.valid {
+    border-bottom: 1px solid #4caf50;
+  }
+  
+  .switch-container {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+  }
+  
+  button {
+    width: 100%;
+  }
+  
+  /* Adjust the styles of the switch if needed */
+  .mat-slide-toggle-thumb {
+    background-color: #fff;
+  }
+  
+  .mat-slide-toggle-bar {
+    background-color: #ddd;
+  }
+  
+  .mat-slide-toggle-checked .mat-slide-toggle-bar {
+    background-color: #4caf50;
+  }
+  
