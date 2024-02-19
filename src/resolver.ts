@@ -54,6 +54,16 @@ export function getDBPort() {
     return "";
 }
 
+export function getAngularPort() {
+    if (mEnv == "dev") {
+        return process.env.ANG_PORT as string;
+    } else if (mEnv == "prod") {
+        return process.env.ANG_PORT as string;
+    }
+    logger.warn(`Environment wasn't set...`)
+    return "";
+}
+
 export function getMongoUri() {
     if (mEnv == "dev") {
         return process.env.MONGO_URI_DEV as string;

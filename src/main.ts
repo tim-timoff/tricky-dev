@@ -1,6 +1,6 @@
 import logger from './logger';
 import * as path from 'path';
-import { getHost, getPort, getAdminPort, urlResolver } from './resolver';
+import { getHost, getPort, getAngularPort, urlResolver } from './resolver';
 
 import express from 'express';
 
@@ -35,27 +35,26 @@ logger.debug(`Dist path is set to ${distPath}.`);
 app.use(express.static(distPath));
 
 app.get("/", (req, res) => {
-  res.redirect('/welcome');
+  res.redirect(`127.0.0.1:${getAngularPort}/welcome`);
 });
 
 app.get("/:type", (req, res) => {
   const type = req.params.type;
   const params = req.params;
   const result = urlResolver(type, params);
-  const htmlFilePath = path.join(__dirname + '/../html/' + result + '.html');
+  const htmlFilePath = path.join(__dirname, '..', 'html', result + '.html');
   logger.debug(`Template path set to: ${htmlFilePath}.`)
 
   // Check if the file exists before rendering
   fs.access(htmlFilePath, fs.constants.F_OK, (err: any) => {
     if (!err) {
-      res.sendFile(htmlFilePath);
+      res.sendFile('/' + htmlFilePath);
     } else {
       logger.error(`Trouble finding html file: ${result}.`)
       res.status(404).send('HTML file not found');
     }
   });
 });
-
 
   // Start the server
   const portNow = getPort();
