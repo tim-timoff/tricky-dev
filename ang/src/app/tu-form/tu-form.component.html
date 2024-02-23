@@ -1,20 +1,17 @@
-<form>
+<form class="main-container">
     <section class="checkbox-section">
-        <span class="checkbox-list">
-            <ul>
-                @for (box of boxes; track box) {
-                <li>
-                    <span>
-                        <mat-checkbox class="mCheck" [checked]="box.signedFor">
-                            {{ box.versionName }}
-                        </mat-checkbox>
-                    </span>
-                    <span>
-                        {{ box.helpTxt }}
-                    </span>
-                </li>
-                }
-            </ul>
-        </span>
+        <div class="checkbox-list">
+            @for (box of boxes; track box) {
+            <div>
+                <span class="mSpan">
+                    <mat-checkbox class="mCheck" [checked]="box.signedFor" (change)="onChange(box)"></mat-checkbox>
+                    <b>{{ box.versionName }}</b>:&nbsp;
+                </span>
+                <span class="mSpan">
+                    {{ box.versionHelpTxt }}
+                </span>
+            </div>
+            }
+        </div>
     </section>
 </form>

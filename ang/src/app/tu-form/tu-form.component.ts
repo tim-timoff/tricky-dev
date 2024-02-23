@@ -11,7 +11,7 @@ export interface TestCheckBox {
 }
 
 export class CheckBoxList {
-  boxes: TestCheckBox [];
+  public boxes: TestCheckBox [];
 
   constructor() {
     this.boxes = [
@@ -33,18 +33,9 @@ export class CheckBoxList {
     ]
     logger.debug('Boxes has been initialized.');
   }
-
-  setAlpha() {
-    this.boxes[0].signedFor = true;
-    this.boxes[1].signedFor = true;
-  }
-
-  setBeta() {
-    this.boxes[1].signedFor = true;
-  }
 }
 
-@Component({
+@Component({  
   selector: 'app-tu-form',
   standalone: true,
   templateUrl: './tu-form.component.html',
@@ -56,6 +47,41 @@ export class CheckBoxList {
   styleUrls: ['./tu-form.component.css'],
 })
 
-export class TuFormComponent {
+export class TuFormComponent implements OnInit {
+  boxes: TestCheckBox[] = [];
 
+  ngOnInit(): void {
+    const list = new CheckBoxList();
+    this.boxes = list.boxes;
+    logger.debug(`Initialized content in TU Form: ${JSON.stringify(this.boxes)}.`)
+  }
+
+  onChange(box: TestCheckBox): void {
+    console.log(`Checkbox onCall fired for ${box}.`);
+    switch (box.versionName) {
+      case 'Альфа' : 
+        if (box.signedFor) { 
+          this.boxes[0].signedFor = true;
+          this.boxes[1].signedFor = true
+        } else {
+          this.boxes[0].signedFor = false;
+        }
+        console.log('Alpha fixed!');
+        break;
+      case 'Бета' :
+        if (box.signedFor) {
+          this.boxes[1].signedFor = true;
+        } else {
+          this.boxes[1].signedFor = false;
+          if (this.boxes[0].signedFor) { this.boxes[0].signedFor = false; }
+        }
+        console.log('Beta fixed!');
+        break;
+      case 'Релиз' :
+        if (!box.signedFor) {
+          this.boxes[2].signedFor = true;
+        }
+        console.log('Release fixed!');
+    }
+  }
 }

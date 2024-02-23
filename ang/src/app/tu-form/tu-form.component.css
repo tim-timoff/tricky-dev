@@ -1,0 +1,20 @@
+.checkbox-list{
+    font-size: clamp(9pt, 10pt, 11pt);
+    display: inline;
+    padding: 20px 10px;
+}
+
+.checkbox-section {
+    margin: auto;
+    text-align: left;
+    background-color: var(--main-paper);
+    border-radius: 6%;
+}
+
+.mat-checkbox.mat-checkbox-checked.mat-checkbox-background {
+    background-color: var(--main-burgundy);
+}
+
+.mat-checkbox.mat-checkbox-checked.mat-checkbox-frame {
+    border-color: var(--paper-shadow);
+}
