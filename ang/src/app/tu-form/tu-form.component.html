@@ -1,0 +1,20 @@
+<form>
+    <section class="checkbox-section">
+        <span class="checkbox-list">
+            <ul>
+                @for (box of boxes; track box) {
+                <li>
+                    <span>
+                        <mat-checkbox class="mCheck" [checked]="box.signedFor">
+                            {{ box.versionName }}
+                        </mat-checkbox>
+                    </span>
+                    <span>
+                        {{ box.helpTxt }}
+                    </span>
+                </li>
+                }
+            </ul>
+        </span>
+    </section>
+</form>

@@ -1,6 +1,6 @@
-import { bootstrapApplication } from '@angular/platform-browser';
+import { platformBrowser } from '@angular/platform-browser';
 import { appConfig } from './app/app.config';
-import { LandingComponent } from './app/landing/landing.component'
+import { LandingComponent } from './app/landing/landing.component';
 
-bootstrapApplication(LandingComponent, appConfig)
+platformBrowser().bootstrapModule(LandingComponent)
   .catch((err) => console.error(err));

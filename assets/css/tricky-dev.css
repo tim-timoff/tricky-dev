@@ -64,8 +64,8 @@ a {
 .site-title {
   font-size: clamp(24pt, 8vw, 60pt);
   color: var(--main-burgundy);
-  padding-top: 12vh;
-  padding-bottom: 3vw;
+  padding-top: 10vh;
+  padding-bottom: 4vh;
 }
 
 .announce {
@@ -86,18 +86,18 @@ a {
 @media only screen and (max-width: 600px) {
   hr { height: 2px; border-radius: 1 px;}
   .main-container { width: 100%; }
-  .site-title {padding-top: 6vh; padding-bottom: 6vw;}
+  .site-title {padding-top: 6vh; padding-bottom: 1vh;}
 }
 
 /* Media query for screens with a minimum width of 601 to 1024 pixels */
 @media only screen and (min-width: 601px) and (max-width: 1024px) {
   hr { height: 4px; border-radius: 1 px;}
   .main-container { width: 80%; }
-  .site-title {padding-top: 8vh; padding-bottom: 4vw;}
+  .site-title {padding-top: 8vh; padding-bottom: 2vh;}
 }
 
 /* Media query for screens with a minimum width of 1025 to 1600 pixels */
-@media only screen and (min-width: 1025px) and (max-width: 1600) {
+@media only screen and (min-width: 1025px) and (max-width: 1600px) {
   hr { height: 6px; border-radius: 2 px;}
   .main-container { width: 60%; }
 }
@@ -214,6 +214,3 @@ a {
   font-weight: 800;
   font-style: italic;
 }
-
-  
-
