@@ -5,16 +5,17 @@
 }
 
 .checkbox-section {
-    margin: auto;
+    margin: 2vh 1vw;
     text-align: left;
-    background-color: var(--main-paper);
-    border-radius: 6%;
+    background-color: #fff8d2;
+    border-radius: 4px;
 }
 
-.mat-checkbox.mat-checkbox-checked.mat-checkbox-background {
-    background-color: var(--main-burgundy);
+.signupBtn {
+    margin: 6vh;
+    color: #6e0a69;
 }
 
-.mat-checkbox.mat-checkbox-checked.mat-checkbox-frame {
-    border-color: var(--paper-shadow);
+.mSpan {
+    margin: auto;
 }

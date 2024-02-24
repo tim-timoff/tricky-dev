@@ -61,6 +61,12 @@ a {
   margin: auto;
 }
 
+.container {
+  text-align: center;
+  height: 100%;
+  margin: auto;
+}
+
 .site-title {
   font-size: clamp(24pt, 8vw, 60pt);
   color: var(--main-burgundy);
@@ -84,27 +90,30 @@ a {
 
 /* Media query for screens with a maximum width of 600 pixels */
 @media only screen and (max-width: 600px) {
-  hr { height: 2px; border-radius: 1 px;}
-  .main-container { width: 100%; }
+  hr { height: 2px; border-radius: 1px;}
+  .main-container .container { width: 100%; }
   .site-title {padding-top: 6vh; padding-bottom: 1vh;}
 }
 
 /* Media query for screens with a minimum width of 601 to 1024 pixels */
 @media only screen and (min-width: 601px) and (max-width: 1024px) {
-  hr { height: 4px; border-radius: 1 px;}
+  hr { height: 4px; border-radius: 1px;}
   .main-container { width: 80%; }
+  .container { width: 90%; }
   .site-title {padding-top: 8vh; padding-bottom: 2vh;}
 }
 
 /* Media query for screens with a minimum width of 1025 to 1600 pixels */
 @media only screen and (min-width: 1025px) and (max-width: 1600px) {
-  hr { height: 6px; border-radius: 2 px;}
+  hr { height: 6px; border-radius: 2px;}
   .main-container { width: 60%; }
+  .container { width: 80%; }
 }
 
 /* Media query for screens with a minimum width of 1025 to 1600 pixels */
 @media only screen and (min-width: 1601px) {
   .main-container { width: 55%; }
+  .container { width: 70%; }
 }
 
 .spectral-extralight {

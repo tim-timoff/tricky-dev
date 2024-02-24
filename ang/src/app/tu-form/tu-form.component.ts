@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, Validators, FormGroup, ReactiveFormsModule, FormControl } from '@angular/forms';
+import { Component, OnInit, AfterViewInit, ElementRef } from '@angular/core';
+import { FormGroup, FormControl, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import logger from './../../../../src/logger';
 import { MatButtonModule } from '@angular/material/button';
-import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatCheckbox, MatCheckboxModule } from '@angular/material/checkbox';
+import { MatGridList } from '@angular/material/grid-list';
 
 export interface TestCheckBox {
   versionName: string,
@@ -10,78 +11,61 @@ export interface TestCheckBox {
   signedFor: boolean,
 }
 
+class TCheckBox implements TestCheckBox {
+  versionName: string;
+  versionHelpTxt: string;
+  signedFor: boolean;
+
+  constructor(ver: string, txt: string, signed: boolean) {
+    this.versionName = ver;
+    this.versionHelpTxt = txt;
+    this.signedFor = signed;
+  }
+}
+
 export class CheckBoxList {
-  public boxes: TestCheckBox [];
+  public boxes: TestCheckBox[];
+  private alpha = new TCheckBox('Альфа', 'Зовите меня, как только будет, что тестировать! (по приглашениям!)', false);
+  private beta = new TCheckBox('Бета', 'Зовите меня, когда больгая часть функционала уже будет работать (публичный тест)', false);
+  private releease = new TCheckBox('Релиз', 'Зовите меня, когда всё будет готово!', true);
 
   constructor() {
-    this.boxes = [
-      {
-        versionName: 'Альфа',
-        versionHelpTxt: 'Зовите меня, как только будет, что тестировать! (по приглашениям!)',
-        signedFor: false
-      },
-      {
-        versionName: 'Бета',
-        versionHelpTxt: 'Зовите меня, когда больгая часть функционала уже будет работать (публичный тест)',
-        signedFor: false
-      },
-      {
-        versionName: 'Релиз',
-        versionHelpTxt: 'Зовите меня, когда всё будет готово!',
-        signedFor: true
-      },
-    ]
+    this.boxes = [this.alpha, this.beta, this.releease];
     logger.debug('Boxes has been initialized.');
   }
 }
 
-@Component({  
+@Component({
   selector: 'app-tu-form',
   standalone: true,
   templateUrl: './tu-form.component.html',
   imports: [
     MatButtonModule,
+    MatCheckbox,
+    MatGridList,
     ReactiveFormsModule,
     MatCheckboxModule,
-  ],
+    FormsModule
+    ],
   styleUrls: ['./tu-form.component.css'],
 })
 
-export class TuFormComponent implements OnInit {
-  boxes: TestCheckBox[] = [];
+export class TuFormComponent implements OnInit, AfterViewInit {
+  boxes: TCheckBox[] = [];
+  signup = new FormControl('', [Validators.required, Validators.email]);
 
   ngOnInit(): void {
-    const list = new CheckBoxList();
-    this.boxes = list.boxes;
+    this.boxes = new CheckBoxList().boxes;
     logger.debug(`Initialized content in TU Form: ${JSON.stringify(this.boxes)}.`)
   }
 
-  onChange(box: TestCheckBox): void {
-    console.log(`Checkbox onCall fired for ${box}.`);
-    switch (box.versionName) {
-      case 'Альфа' : 
-        if (box.signedFor) { 
-          this.boxes[0].signedFor = true;
-          this.boxes[1].signedFor = true
-        } else {
-          this.boxes[0].signedFor = false;
-        }
-        console.log('Alpha fixed!');
-        break;
-      case 'Бета' :
-        if (box.signedFor) {
-          this.boxes[1].signedFor = true;
-        } else {
-          this.boxes[1].signedFor = false;
-          if (this.boxes[0].signedFor) { this.boxes[0].signedFor = false; }
-        }
-        console.log('Beta fixed!');
-        break;
-      case 'Релиз' :
-        if (!box.signedFor) {
-          this.boxes[2].signedFor = true;
-        }
-        console.log('Release fixed!');
-    }
+  ngAfterViewInit(): void {
+    this.boxes[0].signedFor = this.boxes[1].signedFor = false;
+    this.boxes[2].signedFor = true;
+    logger.debug(`Component view has been initialized.`);
+  }
+
+  onSubmit(formValue: any) {
+    logger.debug(`Signup form submitted with: ${formValue}`);
   }
 }

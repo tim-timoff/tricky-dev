@@ -1,17 +1,18 @@
-<form class="main-container">
-    <section class="checkbox-section">
-        <div class="checkbox-list">
-            @for (box of boxes; track box) {
-            <div>
-                <span class="mSpan">
-                    <mat-checkbox class="mCheck" [checked]="box.signedFor" (change)="onChange(box)"></mat-checkbox>
-                    <b>{{ box.versionName }}</b>:&nbsp;
-                </span>
-                <span class="mSpan">
-                    {{ box.versionHelpTxt }}
-                </span>
+<div class="container">
+    <form class="t-user-form">
+        <section class="checkbox-section">
+            <div mat-grid-list cols="1" class="checkbox-list">
+                @for (box of boxes; track box) {
+                <div mat-grid-tile class="mSpan">
+                    <mat-checkbox class="mCheck" name="{{ box.versionName }} ngModel [signup.formControlName]">
+                    </mat-checkbox>
+                    <b>{{ box.versionName }}</b>:&nbsp; {{ box.versionHelpTxt }}
+                </div>
+                }
             </div>
-            }
+        </section>
+        <div>
+            <button mat-raised-button color="#6e0a69" class="signupBtn">Зарегистрироваться</button>
         </div>
-    </section>
-</form>
+    </form>
+</div>
