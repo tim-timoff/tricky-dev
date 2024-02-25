@@ -1,16 +1,18 @@
 <div class="container">
-    <form class="t-user-form">
+    <form [formGroup]="formModel" class="t-user-form" (ngSubmit)="onSubmit()">
         <section class="checkbox-section">
-            <div mat-grid-list cols="1" class="checkbox-list">
+            <div formGroupName="versionSelect" mat-grid-list cols="1" class="checkbox-list">
                 @for (box of boxes; track box) {
                 <div mat-grid-tile class="mSpan">
-                    <mat-checkbox class="mCheck" name="{{ box.versionName }} ngModel [signup.formControlName]">
-                    </mat-checkbox>
+                    <mat-checkbox class="mCheck" formControlName={{box.ver}}></mat-checkbox>
                     <b>{{ box.versionName }}</b>:&nbsp; {{ box.versionHelpTxt }}
                 </div>
                 }
             </div>
         </section>
+        <div formGroupName="emailGroup" mat-grid-list cols="1">
+            <input matInput class="emailInput" name="email" placeholder="Ваш электронный адрес...">
+        </div>
         <div>
             <button mat-raised-button color="#6e0a69" class="signupBtn">Зарегистрироваться</button>
         </div>

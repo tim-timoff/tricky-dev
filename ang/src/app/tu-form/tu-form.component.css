@@ -6,9 +6,9 @@
 
 .checkbox-section {
     margin: 2vh 1vw;
-    text-align: left;
+    align-items: stretch;    
     background-color: #fff8d2;
-    border-radius: 4px;
+    border-radius: 16px;
 }
 
 .signupBtn {
@@ -17,5 +17,16 @@
 }
 
 .mSpan {
+    margin: 3px;
+}
+
+.emailInput {
+    font-size: clamp(10pt, 12pt, 14pt);
+    padding: 0.5vh 2vw;
     margin: auto;
+}
+
+.signupBtn:hover {
+    background-color: #6e0a69;
+    color: #fff8d2;
 }

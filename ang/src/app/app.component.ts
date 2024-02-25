@@ -5,7 +5,12 @@ import { RouterModule } from '@angular/router';
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [ LandingComponent, RouterModule ],
+  imports: [ 
+    LandingComponent, 
+    RouterModule 
+  ],
+  providers: [
+  ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
