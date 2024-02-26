@@ -1,20 +1,32 @@
 <div class="container">
     <form [formGroup]="formModel" class="t-user-form" (ngSubmit)="onSubmit()">
         <section class="checkbox-section">
-            <div formGroupName="versionSelect" mat-grid-list cols="1" class="checkbox-list">
-                @for (box of boxes; track box) {
-                <div mat-grid-tile class="mSpan">
-                    <mat-checkbox class="mCheck" formControlName={{box.ver}}></mat-checkbox>
-                    <b>{{ box.versionName }}</b>:&nbsp; {{ box.versionHelpTxt }}
+            <div formGroupName="versionSelect" class="checkbox-list" (change)="checkBoxClicked($event)">
+                <div class="mSpan">
+                    <p-checkbox class="mCheck" value="{{alpha.signedFor}}" inputId="{{ alpha.ver }}">
+                        <label><b>{{ alpha.versionName }}</b>:&nbsp; {{
+                            alpha.versionHelpTxt}}</label>
+                    </p-checkbox>
                 </div>
-                }
+                <div class="mSpan">
+                    <p-checkbox class="mCheck" value="{{ beta.signedFor }}" inputId="{{ beta.ver }}">
+                        <label><b>{{ beta.versionName }}</b>:&nbsp; {{ beta.versionHelpTxt }}</label>
+                    </p-checkbox>
+                </div>
+                <div class="mSpan">
+                    <p-checkbox class="mCheck" value="{{release.signedFor}}" inputId="{{release.ver}}">
+                        <label><b>{{ release.versionName }}</b>:&nbsp; {{
+                            release.versionHelpTxt}}</label>
+                    </p-checkbox>
+                </div>
             </div>
         </section>
-        <div formGroupName="emailGroup" mat-grid-list cols="1">
-            <input matInput class="emailInput" name="email" placeholder="Ваш электронный адрес...">
-        </div>
-        <div>
-            <button mat-raised-button color="#6e0a69" class="signupBtn">Зарегистрироваться</button>
+        <div formGroupName="emailGroup" class="emailSection">
+            <input type="text" class="emailInput" pInutText placeholder="Ваш электронный адрес..." required="true"
+                (input)="onEmailInput($event)">
+            <div>
+                <button color="#6e0a69" class="signupBtn" (click)="onSubmit()">Зарегистрироваться</button>
+            </div>
         </div>
     </form>
 </div>

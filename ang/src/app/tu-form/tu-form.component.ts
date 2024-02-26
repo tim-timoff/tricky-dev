@@ -1,14 +1,11 @@
 import { Component, OnInit, AfterViewInit } from '@angular/core';
-import { FormGroup, FormControl, FormsModule, ReactiveFormsModule, FormGroupDirective, NgForm } from '@angular/forms';
+import { FormGroup, FormControl, FormsModule, ReactiveFormsModule, Validators, FormBuilder } from '@angular/forms';
 import logger from './../../../../src/logger';
-import { MatButtonModule } from '@angular/material/button';
-import { MatCheckbox, MatCheckboxModule } from '@angular/material/checkbox';
-import { MatGridList } from '@angular/material/grid-list';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { ErrorStateMatcher } from '@angular/material/core';
-import { MatInput, MatInputModule } from '@angular/material/input';
+import { CheckboxModule } from 'primeng/checkbox';
+import { CommonModule } from '@angular/common';
+// import { ErrorStateMatcher } from '@angular/material/core';
 
-export interface TestCheckBox {
+interface TestCheckBox {
   ver: string,
   versionName: string,
   versionHelpTxt: string,
@@ -16,10 +13,10 @@ export interface TestCheckBox {
 }
 
 class TCheckBox implements TestCheckBox {
-  ver: string;
-  versionName: string;
-  versionHelpTxt: string;
-  signedFor: boolean;
+  public ver: string;
+  public versionName: string;
+  public versionHelpTxt: string;
+  public signedFor: boolean;
 
   constructor(verEng: string, verRu: string, txt: string, signed: boolean) {
     this.ver = verEng;
@@ -28,76 +25,60 @@ class TCheckBox implements TestCheckBox {
     this.signedFor = signed;
   }
 }
-
-export class CheckBoxList {
-  public boxes: TestCheckBox[];
-  private alpha = new TCheckBox('alpha', 'Альфа', 'Зовите меня, как только будет, что тестировать! (по приглашениям!)', false);
-  private beta = new TCheckBox('beta', 'Бета', 'Зовите меня, когда больгая часть функционала уже будет работать (публичный тест)', false);
-  private releease = new TCheckBox('release', 'Релиз', 'Зовите меня, когда всё будет готово!', true);
-
-  constructor() {
-    this.boxes = [this.alpha, this.beta, this.releease];
-    logger.debug('Boxes has been initialized.');
-  }
-}
-
-export class MyErrorStateMatcher implements ErrorStateMatcher {
-  isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
-    const isSubmitted = form && form.submitted;
-    return !!(control && control.invalid && (control.dirty || control.touched || isSubmitted));
-  }
-}
+const alpha = new TCheckBox('alpha', 'Альфа', 'Зовите меня, как только будет, что тестировать! (по приглашениям!)', false);
+const beta = new TCheckBox('beta', 'Бета', 'Зовите меня, когда большая часть функционала уже будет работать (публичный тест)', false);
+const release = new TCheckBox('release', 'Релиз', 'Зовите меня, когда всё будет готово!', true);
 
 @Component({
   selector: 'app-tu-form',
   standalone: true,
   templateUrl: './tu-form.component.html',
   imports: [
-    MatButtonModule,
-    MatCheckbox,
-    MatGridList,
     ReactiveFormsModule,
-    MatCheckboxModule,
     FormsModule,
-    MatFormFieldModule,
-    MatInputModule,
+    CheckboxModule,
+    CommonModule
   ],
   styleUrls: ['./tu-form.component.css'],
 })
 
-export class TuFormComponent implements OnInit, AfterViewInit {
-  boxes: TCheckBox[] = [];
+export class TuFormComponent implements OnInit {
+  alpha = alpha;
+  beta = beta;
+  release = release;
   formModel: FormGroup;
-  matcher: MyErrorStateMatcher;
+  isValid = false;
 
-  constructor() {
-    this.boxes = new CheckBoxList().boxes;
-    this.matcher = new MyErrorStateMatcher();
-    this.formModel = new FormGroup({
-      versionSelect: new FormGroup({
-        alpha: new FormControl(this.boxes[0].ver),
-        beta: new FormControl(this.boxes[1].ver),
-        release: new FormControl(this.boxes[2].ver)
+  constructor(fb : FormBuilder) {
+    this.formModel = fb.group({
+      versionSelect: fb.group({
+        'alpha': this.alpha, 
+        'beta': this.beta,
+        'release': this.release,
       }),
-      emailGroup: new FormGroup({
-        email: new FormControl(),
-        submitBtn: new FormControl(),
+      emailGroup: fb.group({
+        'email': '',
+        'submitBtn': '',
       })
     });
   }
 
   onSubmit() {
+    console.log(`Signup form submitted with: ${this.formModel.value}`)
     logger.debug(`Signup form submitted with: ${this.formModel.value}`);
   }
 
   ngOnInit(): void {
-    this.boxes = new CheckBoxList().boxes;
-    logger.debug(`Initialized content in TU Form: ${JSON.stringify(this.boxes)}.`)
+    logger.debug(`Initialized content in TU Form: ${JSON.stringify(this.formModel.value)}.`);
   }
 
-  ngAfterViewInit(): void {
-    this.boxes[0].signedFor = this.boxes[1].signedFor = false;
-    this.boxes[2].signedFor = true;
-    logger.debug(`Component view has been initialized.`);
+  onEmailInput(event: any) {
+    console.log(`Accessing content differently: ${event.target.value}`);
+    logger.debug(`Accessing content differently: ${event.target.value}`);
+  }
+
+  checkBoxClicked(event: any): void {
+    console.log(`${event.target} just got clicked.`);
+    logger.debug(`${event.target} just got clicked.`);
   }
 }

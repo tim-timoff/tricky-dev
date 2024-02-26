@@ -26,7 +26,8 @@
             ],
             "styles": [
               "src/styles.css",
-              "src/custom-theme.scss"
+              "./node_modules/primeng/resources/primeng.min.css",
+              "./node_modules/primeng/resources/themes/lara-dark-purple/theme.css"
             ],
             "scripts": [],
             "server": "src/main.server.ts",
