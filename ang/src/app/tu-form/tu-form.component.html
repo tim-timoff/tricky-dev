@@ -1,32 +1,16 @@
-<div class="container">
+<p-panel width="60%">
     <form [formGroup]="formModel" class="t-user-form" (ngSubmit)="onSubmit()">
-        <section class="checkbox-section">
-            <div formGroupName="versionSelect" class="checkbox-list" (change)="checkBoxClicked($event)">
-                <div class="mSpan">
-                    <p-checkbox class="mCheck" value="{{alpha.signedFor}}" inputId="{{ alpha.ver }}">
-                        <label><b>{{ alpha.versionName }}</b>:&nbsp; {{
-                            alpha.versionHelpTxt}}</label>
-                    </p-checkbox>
-                </div>
-                <div class="mSpan">
-                    <p-checkbox class="mCheck" value="{{ beta.signedFor }}" inputId="{{ beta.ver }}">
-                        <label><b>{{ beta.versionName }}</b>:&nbsp; {{ beta.versionHelpTxt }}</label>
-                    </p-checkbox>
-                </div>
-                <div class="mSpan">
-                    <p-checkbox class="mCheck" value="{{release.signedFor}}" inputId="{{release.ver}}">
-                        <label><b>{{ release.versionName }}</b>:&nbsp; {{
-                            release.versionHelpTxt}}</label>
-                    </p-checkbox>
-                </div>
-            </div>
-        </section>
+        <div formGroupName="versionSelect" class="checkbox-list" (change)="checkBoxClicked($event)">
+            <p-checkbox>
+                
+            </p-checkbox>
+        </div>
         <div formGroupName="emailGroup" class="emailSection">
-            <input type="text" class="emailInput" pInutText placeholder="Ваш электронный адрес..." required="true"
-                (input)="onEmailInput($event)">
+            <input type="text" class="p-input-text-lg" pInputText formControlName="email" placeholder="Ваш электронный адрес..."
+                required="true" (input)="onEmailInput($event)"><br><br>
             <div>
-                <button color="#6e0a69" class="signupBtn" (click)="onSubmit()">Зарегистрироваться</button>
+                <p-button color="#6e0a69" label="Зарегистрироваться" class="signupBtn" (click)="onSubmit()"></p-button>
             </div>
         </div>
     </form>
-</div>
+</p-panel>

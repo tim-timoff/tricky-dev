@@ -3,6 +3,9 @@ import { FormGroup, FormControl, FormsModule, ReactiveFormsModule, Validators, F
 import logger from './../../../../src/logger';
 import { CheckboxModule } from 'primeng/checkbox';
 import { CommonModule } from '@angular/common';
+import { ButtonModule } from 'primeng/button';
+import { InputTextModule } from 'primeng/inputtext';
+import { PanelModule } from 'primeng/panel';
 // import { ErrorStateMatcher } from '@angular/material/core';
 
 interface TestCheckBox {
@@ -37,7 +40,10 @@ const release = new TCheckBox('release', 'Релиз', 'Зовите меня, �
     ReactiveFormsModule,
     FormsModule,
     CheckboxModule,
-    CommonModule
+    CommonModule, 
+    ButtonModule,
+    InputTextModule, 
+    PanelModule
   ],
   styleUrls: ['./tu-form.component.css'],
 })
@@ -48,6 +54,7 @@ export class TuFormComponent implements OnInit {
   release = release;
   formModel: FormGroup;
   isValid = false;
+  email = '';
 
   constructor(fb : FormBuilder) {
     this.formModel = fb.group({
