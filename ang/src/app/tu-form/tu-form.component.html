@@ -1,15 +1,21 @@
-<p-panel width="60%">
-    <form [formGroup]="formModel" class="t-user-form" (ngSubmit)="onSubmit()">
-        <div formGroupName="versionSelect" class="checkbox-list" (change)="checkBoxClicked($event)">
-            <p-checkbox>
-                
-            </p-checkbox>
+<p-panel width="60%" header="Записаться сейчас!" class="align-items-stretch text-center">
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+        <div formGroupName="versionSelect" (change)="checkBoxClicked($event)">
+            <span class="">{{ boxes[0].versionName }}</span>&nbsp;
+            <p-checkbox id="boxes[0].id" 
+                formControlName="a"></p-checkbox>&nbsp;{{ boxes[0].versionHelpTxt }}<br><br>
+            <span>{{ boxes[1].versionName }}</span>&nbsp;
+            <p-checkbox id="boxes[1].id" 
+                formControlName="b"></p-checkbox>&nbsp;{{ boxes[1].versionHelpTxt }}<br><br>
+            <span>{{ boxes[2].versionName }}</span>&nbsp;
+            <p-checkbox id="boxes[2].id"
+                formControlName="r"></p-checkbox>&nbsp;{{ boxes[2].versionHelpTxt }}<br><br>
         </div>
-        <div formGroupName="emailGroup" class="emailSection">
-            <input type="text" class="p-input-text-lg" pInputText formControlName="email" placeholder="Ваш электронный адрес..."
-                required="true" (input)="onEmailInput($event)"><br><br>
+        <div formGroupName="emailGroup" class="p-input-group">
+            <input type="text" class="p-input-text-lg" pInputText
+                placeholder="Ваш электронный адрес..." required="true" formControlName="email"><br><br>
             <div>
-                <p-button color="#6e0a69" label="Зарегистрироваться" class="signupBtn" (click)="onSubmit()"></p-button>
+                <p-button label="Зарегистрироваться" formControlName="submitBtn" (onClick)="onSubmit"></p-button>
             </div>
         </div>
     </form>

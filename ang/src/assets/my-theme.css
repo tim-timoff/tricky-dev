@@ -2,7 +2,7 @@
     font-family: "Arsenal", sans-serif;
     font-feature-settings: "cv02", "cv03", "cv04", "cv11";
     font-variation-settings: normal;
-    --font-family: "Inter var", sans-serif;
+    --font-family: "Arsenal", sans-serif;
     --font-feature-settings: "cv02", "cv03", "cv04", "cv11";
     --surface-a: #ffffff;
     --surface-b: #f9fafb;
@@ -1417,18 +1417,18 @@
     }
 
     .p-inputtext:enabled:hover {
-        border-color: #8B5CF6;
+        border-color: var(--primary-400);
     }
 
     .p-inputtext:enabled:focus {
         outline: 0 none;
         outline-offset: 0;
         box-shadow: 0 0 0 0.2rem #DDD6FE;
-        border-color: #8B5CF6;
+        border-color: var(--primary-600);
     }
 
     .p-inputtext.ng-dirty.ng-invalid {
-        border-color: #e24c4c;
+        border-color: var(--red-500);
     }
 
     .p-inputtext.p-inputtext-sm {

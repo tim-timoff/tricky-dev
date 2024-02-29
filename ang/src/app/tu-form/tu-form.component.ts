@@ -1,5 +1,5 @@
 import { Component, OnInit, AfterViewInit } from '@angular/core';
-import { FormGroup, FormControl, FormsModule, ReactiveFormsModule, Validators, FormBuilder } from '@angular/forms';
+import { FormGroup, FormControl, FormsModule, ReactiveFormsModule, Validators, AsyncValidator, FormBuilder } from '@angular/forms';
 import logger from './../../../../src/logger';
 import { CheckboxModule } from 'primeng/checkbox';
 import { CommonModule } from '@angular/common';
@@ -9,28 +9,28 @@ import { PanelModule } from 'primeng/panel';
 // import { ErrorStateMatcher } from '@angular/material/core';
 
 interface TestCheckBox {
-  ver: string,
+  id: number,
   versionName: string,
   versionHelpTxt: string,
   signedFor: boolean,
 }
 
 class TCheckBox implements TestCheckBox {
-  public ver: string;
+  public id: number;
   public versionName: string;
   public versionHelpTxt: string;
   public signedFor: boolean;
 
-  constructor(verEng: string, verRu: string, txt: string, signed: boolean) {
-    this.ver = verEng;
+  constructor(id: number, verRu: string, txt: string, signed: boolean) {
+    this.id = id;
     this.versionName = verRu;
     this.versionHelpTxt = txt;
     this.signedFor = signed;
   }
 }
-const alpha = new TCheckBox('alpha', 'Альфа', 'Зовите меня, как только будет, что тестировать! (по приглашениям!)', false);
-const beta = new TCheckBox('beta', 'Бета', 'Зовите меня, когда большая часть функционала уже будет работать (публичный тест)', false);
-const release = new TCheckBox('release', 'Релиз', 'Зовите меня, когда всё будет готово!', true);
+const alpha = new TCheckBox(0, 'Альфа', 'Зовите меня, как только будет, что тестировать! (по приглашениям!)', false);
+const beta = new TCheckBox(1, 'Бета', 'Зовите меня, когда большая часть функционала уже будет работать (публичный тест)', false);
+const release = new TCheckBox(2, 'Релиз', 'Зовите меня, когда всё будет готово!', true);
 
 @Component({
   selector: 'app-tu-form',
@@ -49,34 +49,28 @@ const release = new TCheckBox('release', 'Релиз', 'Зовите меня, �
 })
 
 export class TuFormComponent implements OnInit {
-  alpha = alpha;
-  beta = beta;
-  release = release;
-  formModel: FormGroup;
+  boxes = [alpha, beta, release];
   isValid = false;
-  email = '';
 
-  constructor(fb : FormBuilder) {
-    this.formModel = fb.group({
-      versionSelect: fb.group({
-        'alpha': this.alpha, 
-        'beta': this.beta,
-        'release': this.release,
-      }),
-      emailGroup: fb.group({
-        'email': '',
-        'submitBtn': '',
-      })
-    });
+  form = new FormGroup({
+    versionSelect: new FormGroup({
+      a: new FormControl(this.boxes[0]),
+      b: new FormControl(this.boxes[1]),
+      r: new FormControl(this.boxes[2])
+    }),
+    emailGroup: new FormGroup({
+      email: new FormControl(''),
+      submitBtn: new FormControl()
+    })
+  })
+
+  ngOnInit(): void {
+    logger.debug(`Initialized content in TU Form: ${JSON.stringify(this.form.value)}.`);
   }
 
   onSubmit() {
-    console.log(`Signup form submitted with: ${this.formModel.value}`)
-    logger.debug(`Signup form submitted with: ${this.formModel.value}`);
-  }
-
-  ngOnInit(): void {
-    logger.debug(`Initialized content in TU Form: ${JSON.stringify(this.formModel.value)}.`);
+    console.log(`Signup form submitted with: ${this.form.value}`)
+    logger.debug(`Signup form submitted with: ${this.form.value}`);
   }
 
   onEmailInput(event: any) {
@@ -87,5 +81,9 @@ export class TuFormComponent implements OnInit {
   checkBoxClicked(event: any): void {
     console.log(`${event.target} just got clicked.`);
     logger.debug(`${event.target} just got clicked.`);
+  }
+
+  trackBy(item: any): number {
+    return item;
   }
 }
