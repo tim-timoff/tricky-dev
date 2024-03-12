@@ -1,22 +1,27 @@
-<p-panel width="60%" header="Записаться сейчас!" class="align-items-stretch text-center">
+<div width="60%" style="text-align: center;">
+    <div class="m-panel">Зарегистрироваться сейчас</div>
     <form [formGroup]="form" (ngSubmit)="onSubmit()">
         <div formGroupName="versionSelect" (change)="checkBoxClicked($event)">
-            <span class="">{{ boxes[0].versionName }}</span>&nbsp;
-            <p-checkbox id="boxes[0].id" 
-                formControlName="a"></p-checkbox>&nbsp;{{ boxes[0].versionHelpTxt }}<br><br>
-            <span>{{ boxes[1].versionName }}</span>&nbsp;
-            <p-checkbox id="boxes[1].id" 
-                formControlName="b"></p-checkbox>&nbsp;{{ boxes[1].versionHelpTxt }}<br><br>
-            <span>{{ boxes[2].versionName }}</span>&nbsp;
-            <p-checkbox id="boxes[2].id"
-                formControlName="r"></p-checkbox>&nbsp;{{ boxes[2].versionHelpTxt }}<br><br>
+            <div *ngFor="let box of boxes">
+                <div *ngIf="box.signedFor; then checked else unchecked"></div>
+                <ng-template #checked>
+                    <div (change)="onCheckboxChange(box.versionLetter)">{{ box.versionName }}&nbsp;
+                        <input type="checkbox" id="{{ box.versionLetter }}" checked="true"> {{ box.versionHelpTxt }}
+                    </div>
+                </ng-template>
+                <ng-template #unchecked>
+                    <div (change)="onCheckboxChange(box.versionLetter)">{{ box.versionName }}&nbsp;
+                        <input type="checkbox" id="{{ box.versionLetter }}" checked="false"> {{ box.versionHelpTxt }}
+                    </div>
+                </ng-template>
+            </div>
         </div>
         <div formGroupName="emailGroup" class="p-input-group">
-            <input type="text" class="p-input-text-lg" pInputText
-                placeholder="Ваш электронный адрес..." required="true" formControlName="email"><br><br>
+            <input type="text" class="p-input-text-lg" pInputText placeholder="Ваш электронный адрес..." required="true"
+                formControlName="email" (change)="onEmailInput($event)"><br><br>
             <div>
-                <p-button label="Зарегистрироваться" formControlName="submitBtn" (onClick)="onSubmit"></p-button>
+                <button type="submit" label="Зарегистрироваться"></button>
             </div>
         </div>
     </form>
-</p-panel>
+</div>

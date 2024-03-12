@@ -1,2 +1,49 @@
 /* You can add global styles to this file, and also import other style files */
 @import url('./../../assets/css/tricky-dev.css');
+
+div .m-panel {
+    background-color: var(--primary-600);
+    border-radius: 3vh;
+    color: var(--primary-color-text);
+    padding: 2.5vh;
+    margin-top: 1vh;
+}
+
+input[type="checkbox"] .ch-wrapper  {
+    display: none;
+}
+
+.ch-wrapper .terms-label {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+}
+
+.ch-wrapper .terms-label .label-text {
+    margin-left: 10px;
+}
+
+.ch-wrapper .checkbox-svg {
+    width: 30px;
+    height: 30px;
+}
+
+.ch-wrapper .checkbox-box {
+    fill: var(--paper);
+    stroke: var(--primary-600);
+    stroke-dasharray: 800;
+    stroke-dashoffset: 800;
+    transition: stroke-dashoffset 0.6s ease-in;
+}
+
+.ch-wrapper .checkbox-tick {
+    stroke: var(--primary-300);
+    stroke-dasharray: 172;
+    stroke-dashoffset: 172;
+    transition: stroke-dashoffset 0.6s ease-in;
+}
+
+.ch-wrapper input[type="checkbox"]:checked+.terms-label .checkbox-box,
+.ch-wrapper input[type="checkbox"]:checked+.terms-label .checkbox-tick {
+    stroke-dashoffset: 0;
+}

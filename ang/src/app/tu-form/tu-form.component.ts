@@ -17,20 +17,22 @@ interface TestCheckBox {
 
 class TCheckBox implements TestCheckBox {
   public id: number;
+  public versionLetter: string;
   public versionName: string;
   public versionHelpTxt: string;
   public signedFor: boolean;
 
-  constructor(id: number, verRu: string, txt: string, signed: boolean) {
+  constructor(id: number, letter: string, verRu: string, txt: string, signed: boolean) {
     this.id = id;
+    this.versionLetter = letter;
     this.versionName = verRu;
     this.versionHelpTxt = txt;
     this.signedFor = signed;
   }
 }
-const alpha = new TCheckBox(0, 'Альфа', 'Зовите меня, как только будет, что тестировать! (по приглашениям!)', false);
-const beta = new TCheckBox(1, 'Бета', 'Зовите меня, когда большая часть функционала уже будет работать (публичный тест)', false);
-const release = new TCheckBox(2, 'Релиз', 'Зовите меня, когда всё будет готово!', true);
+const alpha = new TCheckBox(0, 'a', 'Альфа', 'Зовите меня, как только будет, что тестировать! (по приглашениям!)', false);
+const beta = new TCheckBox(1, 'b', 'Бета', 'Зовите меня, когда большая часть функционала уже будет работать (публичный тест)', false);
+const release = new TCheckBox(2, 'r', 'Релиз', 'Зовите меня, когда всё будет готово!', true);
 
 @Component({
   selector: 'app-tu-form',
@@ -40,9 +42,9 @@ const release = new TCheckBox(2, 'Релиз', 'Зовите меня, когд�
     ReactiveFormsModule,
     FormsModule,
     CheckboxModule,
-    CommonModule, 
+    CommonModule,
     ButtonModule,
-    InputTextModule, 
+    InputTextModule,
     PanelModule
   ],
   styleUrls: ['./tu-form.component.css'],
@@ -51,18 +53,24 @@ const release = new TCheckBox(2, 'Релиз', 'Зовите меня, когд�
 export class TuFormComponent implements OnInit {
   boxes = [alpha, beta, release];
   isValid = false;
+  form: FormGroup;
+  fb = new FormBuilder();
 
-  form = new FormGroup({
-    versionSelect: new FormGroup({
-      a: new FormControl(this.boxes[0]),
-      b: new FormControl(this.boxes[1]),
-      r: new FormControl(this.boxes[2])
-    }),
-    emailGroup: new FormGroup({
-      email: new FormControl(''),
-      submitBtn: new FormControl()
+  constructor() {
+    this.form = new FormGroup({
+      versionSelect: new FormGroup({}),
+      emailGroup: new FormGroup({
+        email: new FormControl(''),
+        submitBtn: new FormControl('')
+      })
     })
-  })
+
+    const versionSelectGroup = this.form.get('versionSelect') as FormGroup;
+
+    for (let box of this.boxes) {
+      versionSelectGroup.addControl(String(box.id), new FormControl(box.signedFor));
+    }
+  }
 
   ngOnInit(): void {
     logger.debug(`Initialized content in TU Form: ${JSON.stringify(this.form.value)}.`);
@@ -85,5 +93,10 @@ export class TuFormComponent implements OnInit {
 
   trackBy(item: any): number {
     return item;
+  }
+
+  onCheckboxChange(checkboxName: string) {
+    logger.debug(`${checkboxName} Checkbox Value:`, this.form.get(`versionSelect.${checkboxName}`)?.value);
+    console.log(`Box ${checkboxName} has changed!`);
   }
 }

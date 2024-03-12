@@ -2,15 +2,14 @@
 /* font-family: 'Spectral', serif */
 
 :root {
-    --main-blue: #101a79;
-    --main-burgundy: #6e0a69;
-    --txt: #242424;
-    --ok: #004113;
-    --not-ok: #da0000;
-    --paper:#fff8d2;
-    --paper-transparent: rgba(255, 248, 210, 0.7);
-    --paper-shadow:#e0d9ad;
-  }
+  --main-blue: #101a79;
+  --txt: #242424;
+  --ok: #004113;
+  --not-ok: #da0000;
+  --paper: #fff8d2;
+  --paper-transparent: rgba(255, 248, 210, 0.7);
+  --paper-shadow: #e0d9ad;
+}
 
 body {
   padding: 3px;
@@ -36,7 +35,7 @@ hr {
 
 a {
   color: var(--main-burgundy);
-  font-weight: 550;
+  font-size: inherit;
 }
 
 .img-container {
@@ -91,30 +90,67 @@ a {
 
 /* Media query for screens with a maximum width of 600 pixels */
 @media only screen and (max-width: 600px) {
-  hr { height: 2px; border-radius: 1px;}
-  .main-container .container { width: 100%; }
-  .site-title {padding-top: 6vh; padding-bottom: 1vh;}
+  hr {
+    height: 2px;
+    border-radius: 1px;
+  }
+
+  .main-container .container {
+    width: 100%;
+  }
+
+  .site-title {
+    padding-top: 6vh;
+    padding-bottom: 1vh;
+  }
 }
 
 /* Media query for screens with a minimum width of 601 to 1024 pixels */
 @media only screen and (min-width: 601px) and (max-width: 1024px) {
-  hr { height: 4px; border-radius: 1px;}
-  .main-container { width: 80%; }
-  .container { width: 90%; }
-  .site-title {padding-top: 8vh; padding-bottom: 2vh;}
+  hr {
+    height: 4px;
+    border-radius: 1px;
+  }
+
+  .main-container {
+    width: 80%;
+  }
+
+  .container {
+    width: 90%;
+  }
+
+  .site-title {
+    padding-top: 8vh;
+    padding-bottom: 2vh;
+  }
 }
 
 /* Media query for screens with a minimum width of 1025 to 1600 pixels */
 @media only screen and (min-width: 1025px) and (max-width: 1600px) {
-  hr { height: 6px; border-radius: 2px;}
-  .main-container { width: 60%; }
-  .container { width: 80%; }
+  hr {
+    height: 6px;
+    border-radius: 2px;
+  }
+
+  .main-container {
+    width: 60%;
+  }
+
+  .container {
+    width: 80%;
+  }
 }
 
 /* Media query for screens with a minimum width of 1025 to 1600 pixels */
 @media only screen and (min-width: 1601px) {
-  .main-container { width: 55%; }
-  .container { width: 70%; }
+  .main-container {
+    width: 55%;
+  }
+
+  .container {
+    width: 70%;
+  }
 }
 
 .spectral-extralight {
@@ -145,30 +181,6 @@ a {
   font-family: "Spectral", serif;
   font-weight: 400;
   font-style: normal;
-}
-
-.arsenal-regular {
-  font-family: "Arsenal", sans-serif;
-  font-weight: 400;
-  font-style: normal;
-}
-
-.arsenal-regular-italic {
-  font-family: "Arsenal", sans-serif;
-  font-weight: 400;
-  font-style: italic;
-}
-
-.arsenal-bold {
-  font-family: "Arsenal", sans-serif;
-  font-weight: 700;
-  font-style: normal;
-}
-
-.arsenal-bold-italic {
-  font-family: "Arsenal", sans-serif;
-  font-weight: 700;
-  font-style: italic;
 }
 
 .spectral-regular-italic {
@@ -222,5 +234,41 @@ a {
 .spectral-extrabold-italic {
   font-family: "Spectral", serif;
   font-weight: 800;
+  font-style: italic;
+}
+
+.arsenal-light {
+  font-family: "Arsenal", sans-serif;
+  font-weight: 200;
+  font-style: normal;
+}
+
+.arsenal-regular {
+  font-family: "Arsenal", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.arsenal-semibold {
+  font-family: "Arsenal", sans-serif;
+  font-weight: 500;
+  font-style: normal;
+}
+
+.arsenal-regular-italic {
+  font-family: "Arsenal", sans-serif;
+  font-weight: 400;
+  font-style: italic;
+}
+
+.arsenal-bold {
+  font-family: "Arsenal", sans-serif;
+  font-weight: 700;
+  font-style: normal;
+}
+
+.arsenal-bold-italic {
+  font-family: "Arsenal", sans-serif;
+  font-weight: 700;
   font-style: italic;
 }
