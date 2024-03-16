@@ -1,26 +1,20 @@
 <div width="60%" style="text-align: center;">
     <div class="m-panel">Зарегистрироваться сейчас</div>
     <form [formGroup]="form" (ngSubmit)="onSubmit()">
-        <div formGroupName="versionSelect" (change)="checkBoxClicked($event)">
-            <div *ngFor="let box of boxes">
-                <div *ngIf="box.signedFor; then checked else unchecked"></div>
-                <ng-template #checked>
-                    <div (change)="onCheckboxChange(box.versionLetter)">{{ box.versionName }}&nbsp;
-                        <input type="checkbox" id="{{ box.versionLetter }}" checked="true"> {{ box.versionHelpTxt }}
-                    </div>
-                </ng-template>
-                <ng-template #unchecked>
-                    <div (change)="onCheckboxChange(box.versionLetter)">{{ box.versionName }}&nbsp;
-                        <input type="checkbox" id="{{ box.versionLetter }}" checked="false"> {{ box.versionHelpTxt }}
-                    </div>
-                </ng-template>
+        <div formGroupName="versionSelect">
+            <div *ngFor="let box of boxes; trackBy: boxTrackBy" >
+                    <label for="{{ box.id }}" class="arsenal-bold">{{ box.versionName }}&nbsp;</label>
+                    <p-checkbox id="{{ box.id }}" [formControlName]="box.id"></p-checkbox>
+                    <span class="smaller">&nbsp;{{box.versionHelpTxt}}</span>
             </div>
         </div>
+
         <div formGroupName="emailGroup" class="p-input-group">
+            <br>
             <input type="text" class="p-input-text-lg" pInputText placeholder="Ваш электронный адрес..." required="true"
                 formControlName="email" (change)="onEmailInput($event)"><br><br>
             <div>
-                <button type="submit" label="Зарегистрироваться"></button>
+                <p-button icon="pi pi-check" label="Зарегистрироваться"></p-button>
             </div>
         </div>
     </form>

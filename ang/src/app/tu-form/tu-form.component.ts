@@ -74,6 +74,18 @@ export class TuFormComponent implements OnInit {
 
   ngOnInit(): void {
     logger.debug(`Initialized content in TU Form: ${JSON.stringify(this.form.value)}.`);
+    this.setInitialBoxValues();
+  }
+
+  setInitialBoxValues() {
+    const versionSelectGroup = this.form.get('versionSelect') as FormGroup;
+  
+    for (let box of this.boxes) {
+      const control = versionSelectGroup.get(String(box.id));
+      if (control) {
+        control.setValue(box.signedFor);
+      }
+    }
   }
 
   onSubmit() {
@@ -86,17 +98,12 @@ export class TuFormComponent implements OnInit {
     logger.debug(`Accessing content differently: ${event.target.value}`);
   }
 
-  checkBoxClicked(event: any): void {
-    console.log(`${event.target} just got clicked.`);
-    logger.debug(`${event.target} just got clicked.`);
+  boxTrackBy(index: number, box: TCheckBox) {
+    return box;
   }
 
-  trackBy(item: any): number {
-    return item;
-  }
-
-  onCheckboxChange(checkboxName: string) {
-    logger.debug(`${checkboxName} Checkbox Value:`, this.form.get(`versionSelect.${checkboxName}`)?.value);
-    console.log(`Box ${checkboxName} has changed!`);
+  checkboxClicked(b: TCheckBox) {
+    logger.debug(`Checkbox ${b.versionName} clicked!`);
+    console.log(`Checkbox ${b.versionName} clicked!`);
   }
 }
