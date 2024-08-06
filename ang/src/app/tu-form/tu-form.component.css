@@ -1,3 +1,12 @@
+:host {
+  width: 60%;
+  text-align: center;
+}
+
+form {
+  margin: 2rem;
+}
+
 .checkbox-list{
     font-size: clamp(9pt, 10pt, 11pt);
     display: inline;

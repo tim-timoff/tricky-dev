@@ -1,21 +1,70 @@
-<div width="60%" style="text-align: center;">
-    <div class="m-panel">Зарегистрироваться сейчас</div>
-    <form [formGroup]="form" (ngSubmit)="onSubmit()">
-        <div formGroupName="versionSelect">
-            <div *ngFor="let box of boxes; trackBy: boxTrackBy" >
-                    <label for="{{ box.id }}" class="arsenal-bold">{{ box.versionName }}&nbsp;</label>
-                    <p-checkbox id="{{ box.id }}" [formControlName]="box.id"></p-checkbox>
-                    <span class="smaller">&nbsp;{{box.versionHelpTxt}}</span>
-            </div>
-        </div>
+  <!--<form
+    [formGroup]="form"
+    (ngSubmit)="onSubmit()"
+  >
+    <div formGroupName="versionSelect">
+      <div *ngFor="let box of boxes" >
+        <label
+          for="{{ box.id }}"
+          class="arsenal-bold"
+        >
+          {{ box.versionName }}
+        </label>
+        <p-checkbox
+          id="{{ box.id }}"
+          [formControlName]="box.id"
+        ></p-checkbox>
+        <span class="smaller">
+          {{box.versionHelpTxt}}
+        </span>
+      </div>
+    </div>
 
-        <div formGroupName="emailGroup" class="p-input-group">
-            <br>
-            <input type="text" class="p-input-text-lg" pInputText placeholder="Ваш электронный адрес..." required="true"
-                formControlName="email" (change)="onEmailInput($event)"><br><br>
-            <div>
-                <p-button icon="pi pi-check" label="Зарегистрироваться"></p-button>
-            </div>
-        </div>
-    </form>
+    <div
+      formGroupName="emailGroup"
+      class="p-input-group"
+    >
+      <br>
+      <input
+        pInputText
+        type="text"
+        class="p-input-text-lg"
+        placeholder="Ваш электронный адрес..."
+        required="true"
+        formControlName="email"
+        (change)="onEmailInput($event)"
+      >
+      <div>
+
+      </div>
+    </div>
+  </form> -->
+
+<div class="m-panel">
+  Зарегистрироваться сейчас
 </div>
+
+<form  autocomplete="on" formGroupName="form">
+  <div *ngFor="let box of boxes" class="field-checkbox">
+  <!-- [(ngModel)]="selectedCategories" -->
+    <p-checkbox
+      name="group"
+      [label]="box.versionName"
+      [value]="box.versionName"
+    />
+          <!-- {{box.versionHelpTxt}} -->
+  </div>
+  <input
+    pInputText
+    type="text"
+    class="p-input-text-lg"
+    placeholder="Ваш электронный адрес..."
+    required="true"
+    formControlName="email"
+    (change)="onEmailInput($event)"
+  >
+  <p-button
+    icon="pi pi-check"
+    label="Зарегистрироваться"
+  ></p-button>
+</form>

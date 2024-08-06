@@ -6,14 +6,8 @@ import { CommonModule } from '@angular/common';
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
 import { PanelModule } from 'primeng/panel';
+import { EVersionName, TestCheckBox } from './tu-form.model';
 // import { ErrorStateMatcher } from '@angular/material/core';
-
-interface TestCheckBox {
-  id: number,
-  versionName: string,
-  versionHelpTxt: string,
-  signedFor: boolean,
-}
 
 class TCheckBox implements TestCheckBox {
   public id: number;
@@ -38,6 +32,7 @@ const release = new TCheckBox(2, 'r', 'Релиз', 'Зовите меня, ко
   selector: 'app-tu-form',
   standalone: true,
   templateUrl: './tu-form.component.html',
+  styleUrls: ['./tu-form.component.css'],
   imports: [
     ReactiveFormsModule,
     FormsModule,
@@ -47,63 +42,48 @@ const release = new TCheckBox(2, 'r', 'Релиз', 'Зовите меня, ко
     InputTextModule,
     PanelModule
   ],
-  styleUrls: ['./tu-form.component.css'],
 })
 
 export class TuFormComponent implements OnInit {
-  boxes = [alpha, beta, release];
-  isValid = false;
-  form: FormGroup;
-  fb = new FormBuilder();
-
-  constructor() {
-    this.form = new FormGroup({
-      versionSelect: new FormGroup({}),
-      emailGroup: new FormGroup({
-        email: new FormControl(''),
-        submitBtn: new FormControl('')
-      })
-    })
-
-    const versionSelectGroup = this.form.get('versionSelect') as FormGroup;
-
-    for (let box of this.boxes) {
-      versionSelectGroup.addControl(String(box.id), new FormControl(box.signedFor));
-    }
-  }
-
   ngOnInit(): void {
-    logger.debug(`Initialized content in TU Form: ${JSON.stringify(this.form.value)}.`);
-    this.setInitialBoxValues();
-  }
-
-  setInitialBoxValues() {
-    const versionSelectGroup = this.form.get('versionSelect') as FormGroup;
-  
     for (let box of this.boxes) {
-      const control = versionSelectGroup.get(String(box.id));
-      if (control) {
-        control.setValue(box.signedFor);
+      if (box.signedFor) {
+        // this.form.patchValue(release.checked)
       }
     }
   }
+  boxes = [alpha, beta, release];
+  selectedBox = Array<EVersionName>;
+  form = new FormGroup({
+    versionSelect: new FormGroup({
+      'Alfa': new FormControl(this.boxes[0].signedFor),
+      'Beta': new FormControl(this.boxes[1].signedFor),
+      'Release': new FormControl(this.boxes[2].signedFor),
+    }),
+    email: new FormControl('', Validators.email),
+  })
+  // fb = new FormBuilder();
+
+  // constructor() {
+  //   const versionSelectGroup = this.form.get('versionSelect') as FormGroup;
+
+  //   for (let box of this.boxes) {
+  //     versionSelectGroup.addControl(String(box.id), new FormControl(box.signedFor));
+  //   }
+  // }
 
   onSubmit() {
     console.log(`Signup form submitted with: ${this.form.value}`)
-    logger.debug(`Signup form submitted with: ${this.form.value}`);
+    // logger.debug(`Signup form submitted with: ${this.form.value}`);
   }
 
   onEmailInput(event: any) {
     console.log(`Accessing content differently: ${event.target.value}`);
-    logger.debug(`Accessing content differently: ${event.target.value}`);
-  }
-
-  boxTrackBy(index: number, box: TCheckBox) {
-    return box;
+    // logger.debug(`Accessing content differently: ${event.target.value}`);
   }
 
   checkboxClicked(b: TCheckBox) {
-    logger.debug(`Checkbox ${b.versionName} clicked!`);
+    // logger.debug(`Checkbox ${b.versionName} clicked!`);
     console.log(`Checkbox ${b.versionName} clicked!`);
   }
 }
