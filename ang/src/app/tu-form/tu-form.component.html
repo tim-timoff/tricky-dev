@@ -1,21 +1,35 @@
-<div width="60%" style="text-align: center;">
-    <div class="m-panel">Зарегистрироваться сейчас</div>
-    <form [formGroup]="form" (ngSubmit)="onSubmit()">
-        <div formGroupName="versionSelect">
-            <div *ngFor="let box of boxes; trackBy: boxTrackBy" >
-                    <label for="{{ box.id }}" class="arsenal-bold">{{ box.versionName }}&nbsp;</label>
-                    <p-checkbox id="{{ box.id }}" [formControlName]="box.id"></p-checkbox>
-                    <span class="smaller">&nbsp;{{box.versionHelpTxt}}</span>
-            </div>
-        </div>
-
-        <div formGroupName="emailGroup" class="p-input-group">
-            <br>
-            <input type="text" class="p-input-text-lg" pInputText placeholder="Ваш электронный адрес..." required="true"
-                formControlName="email" (change)="onEmailInput($event)"><br><br>
-            <div>
-                <p-button icon="pi pi-check" label="Зарегистрироваться"></p-button>
-            </div>
-        </div>
-    </form>
+<div class="m-panel">
+  Зарегистрироваться сейчас
 </div>
+
+<form [formGroup]="form">
+  <tricky-chip-control
+    formControlName="chips"
+    [label]="'Выберите этап тестирования'"
+    >
+    <!-- [multiple]="true" -->
+    <tricky-chip
+      *ngFor="let box of boxes"
+      [key]="box.versionKey"
+      [color]="box.versionColour"
+      [checked]="box.versionChecked"
+    >
+      {{ box.versionName }}
+    </tricky-chip>
+  </tricky-chip-control>
+
+  <input
+    pInputText
+    type="email"
+    class="p-input-text-lg"
+    placeholder="Ваш электронный адрес..."
+    required="true"
+    formControlName="email"
+  >
+  <p-button
+    icon="pi pi-check"
+    label="Зарегистрироваться"
+    (click)="onSubmit()"
+    type="submit"
+  ></p-button>
+</form>

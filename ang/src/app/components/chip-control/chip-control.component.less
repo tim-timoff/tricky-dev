@@ -1,0 +1,54 @@
+:host {
+  &.chip-control {
+    display: flex;
+    flex-direction: column;
+
+    label {
+      color: black;
+      font-size: large;
+      font-weight: 600;
+
+      /* @media @mobile-resolution {
+        .ceres-fsw(sm);
+      } */
+    }
+
+    .tag-container {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 8px;
+
+      & > tricky-chip {
+        margin: 0;
+      }
+    }
+
+    &--scrollable .tag-container {
+      overflow-x: auto;
+      overflow-y: hidden;
+      flex-wrap: nowrap;
+    }
+  }
+}
+
+@background-colors: #ff5733, #33ff57, #3357ff, #ff33a8, #33fff1;
+
+.assign-backgrounds(@colors) {
+  .loop(@index, @color) when (@index > length(@colors)) {
+  }
+
+  .loop(@index, @color) when not (@index > length(@colors)) {
+    .custom-component:nth-child(@{index}) {
+      background-color: @color;
+    }
+
+    .loop(@index + 1, extract(@colors, @index + 1));
+  }
+
+  .loop(1, extract(@colors, 1));
+}
+
+.assign-backgrounds(@background-colors);
+

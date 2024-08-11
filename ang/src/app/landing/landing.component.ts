@@ -9,6 +9,4 @@ import { TuFormComponent } from '../tu-form/tu-form.component';
   styleUrl: './landing.component.css'
 })
 
-export class LandingComponent {
-
-}
+export class LandingComponent {}
