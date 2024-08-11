@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, HostBinding, HostListener, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, HostBinding, HostListener, Input, Output } from '@angular/core';
 import { ETagColor, ICheckableTagState } from './tag.model';
 import { NgFor, NgForOf } from '@angular/common';
 
@@ -13,10 +13,8 @@ import { NgFor, NgForOf } from '@angular/common';
   styleUrl: './chip.component.less',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ChipComponent implements OnChanges {
-  ngOnChanges(changes: SimpleChanges): void {
-    // console.log(this.checkable)
-  }
+export class ChipComponent {
+
   private _color: ETagColor = ETagColor['gray'];
   @Input('key') key: string = '';
   @Input('size') @HostBinding('attr.size') size: 'normal' | 'small' = 'normal';
@@ -25,7 +23,6 @@ export class ChipComponent implements OnChanges {
   @Input('color')
   set color(value: ETagColor | string) {
     //@ts-ignore
-    // this._color = ETagColor[value.toString()] || value;
     this._color = value;
   }
   get color() {

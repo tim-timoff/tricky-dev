@@ -6,27 +6,15 @@
   <tricky-chip-control
     formControlName="chips"
     [label]="'Выберите этап тестирования'"
-    [multiple]="true"
     >
+    <!-- [multiple]="true" -->
     <tricky-chip
-      key="All"
-      color="grey"
-    >Все этапы
-    </tricky-chip>
-    <tricky-chip
-      key="Alfa"
-      color="green"
-    >Альфа
-    </tricky-chip>
-    <tricky-chip
-      key="Beta"
-      color="red"
-    >Бета
-    </tricky-chip>
-    <tricky-chip
-      key="Release"
-      color="brown"
-    >Релиз
+      *ngFor="let box of boxes"
+      [key]="box.versionKey"
+      [color]="box.versionColour"
+      [checked]="box.versionChecked"
+    >
+      {{ box.versionName }}
     </tricky-chip>
   </tricky-chip-control>
 

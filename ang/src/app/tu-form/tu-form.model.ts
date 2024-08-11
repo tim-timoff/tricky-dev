@@ -1,8 +1,9 @@
 export interface TestCheckBox {
-  id: number,
+  versionKey: string,
   versionName: string,
   versionHelpTxt: string,
-  signedFor: boolean,
+  versionColour: string,
+  versionChecked: boolean,
 }
 
 export enum EVersionName {
