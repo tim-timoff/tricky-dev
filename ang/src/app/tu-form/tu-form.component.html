@@ -1,70 +1,47 @@
-  <!--<form
-    [formGroup]="form"
-    (ngSubmit)="onSubmit()"
-  >
-    <div formGroupName="versionSelect">
-      <div *ngFor="let box of boxes" >
-        <label
-          for="{{ box.id }}"
-          class="arsenal-bold"
-        >
-          {{ box.versionName }}
-        </label>
-        <p-checkbox
-          id="{{ box.id }}"
-          [formControlName]="box.id"
-        ></p-checkbox>
-        <span class="smaller">
-          {{box.versionHelpTxt}}
-        </span>
-      </div>
-    </div>
-
-    <div
-      formGroupName="emailGroup"
-      class="p-input-group"
-    >
-      <br>
-      <input
-        pInputText
-        type="text"
-        class="p-input-text-lg"
-        placeholder="Ваш электронный адрес..."
-        required="true"
-        formControlName="email"
-        (change)="onEmailInput($event)"
-      >
-      <div>
-
-      </div>
-    </div>
-  </form> -->
-
 <div class="m-panel">
   Зарегистрироваться сейчас
 </div>
 
-<form  autocomplete="on" formGroupName="form">
-  <div *ngFor="let box of boxes" class="field-checkbox">
-  <!-- [(ngModel)]="selectedCategories" -->
-    <p-checkbox
-      name="group"
-      [label]="box.versionName"
-      [value]="box.versionName"
-    />
-          <!-- {{box.versionHelpTxt}} -->
-  </div>
+<form [formGroup]="form">
+  <tricky-chip-control
+    formControlName="chips"
+    [label]="'Выберите этап тестирования'"
+    [multiple]="true"
+    >
+    <tricky-chip
+      key="All"
+      color="grey"
+    >Все этапы
+    </tricky-chip>
+    <tricky-chip
+      key="Alfa"
+      color="green"
+    >Альфа
+    </tricky-chip>
+    <tricky-chip
+      key="Beta"
+      color="red"
+    >Бета
+    </tricky-chip>
+    <tricky-chip
+      key="Release"
+      color="brown"
+    >Релиз
+    </tricky-chip>
+  </tricky-chip-control>
+
   <input
     pInputText
-    type="text"
+    type="email"
     class="p-input-text-lg"
     placeholder="Ваш электронный адрес..."
     required="true"
     formControlName="email"
-    (change)="onEmailInput($event)"
   >
   <p-button
     icon="pi pi-check"
     label="Зарегистрироваться"
+    (click)="onSubmit()"
+    type="submit"
   ></p-button>
 </form>

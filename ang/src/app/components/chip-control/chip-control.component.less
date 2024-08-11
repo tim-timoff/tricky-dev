@@ -1,0 +1,34 @@
+:host {
+  &.chip-control {
+    display: flex;
+    flex-direction: column;
+
+    label {
+      color: black;
+      font-size: large;
+      font-weight: 600;
+
+      /* @media @mobile-resolution {
+        .ceres-fsw(sm);
+      } */
+    }
+
+    .tag-container {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 8px;
+
+      & > tricky-chip {
+        margin: 0;
+      }
+    }
+
+    &--scrollable .tag-container {
+      overflow-x: auto;
+      overflow-y: hidden;
+      flex-wrap: nowrap;
+    }
+  }
+}

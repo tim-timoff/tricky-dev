@@ -1,13 +1,13 @@
-import { Component, OnInit, AfterViewInit } from '@angular/core';
-import { FormGroup, FormControl, FormsModule, ReactiveFormsModule, Validators, AsyncValidator, FormBuilder } from '@angular/forms';
-import logger from './../../../../src/logger';
+import { Component, OnInit } from '@angular/core';
+import { FormGroup, FormControl, FormsModule, ReactiveFormsModule, Validators, RequiredValidator } from '@angular/forms';
 import { CheckboxModule } from 'primeng/checkbox';
 import { CommonModule } from '@angular/common';
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
 import { PanelModule } from 'primeng/panel';
-import { EVersionName, TestCheckBox } from './tu-form.model';
-// import { ErrorStateMatcher } from '@angular/material/core';
+import { TestCheckBox } from './tu-form.model';
+import { ChipComponent } from '../components/chip-control/chip.component';
+import { ChipControlComponent } from '../components/chip-control/chip-control.component';
 
 class TCheckBox implements TestCheckBox {
   public id: number;
@@ -40,50 +40,27 @@ const release = new TCheckBox(2, 'r', 'Релиз', 'Зовите меня, ко
     CommonModule,
     ButtonModule,
     InputTextModule,
-    PanelModule
+    PanelModule,
+    ChipComponent,
+    ChipControlComponent
   ],
 })
 
 export class TuFormComponent implements OnInit {
+
+  form!: FormGroup;
+
   ngOnInit(): void {
-    for (let box of this.boxes) {
-      if (box.signedFor) {
-        // this.form.patchValue(release.checked)
-      }
-    }
+    this.form = new FormGroup({
+      chips: new FormControl(new Map()),
+      email: new FormControl('', [ Validators.required, Validators.email ]),
+    });
   }
-  boxes = [alpha, beta, release];
-  selectedBox = Array<EVersionName>;
-  form = new FormGroup({
-    versionSelect: new FormGroup({
-      'Alfa': new FormControl(this.boxes[0].signedFor),
-      'Beta': new FormControl(this.boxes[1].signedFor),
-      'Release': new FormControl(this.boxes[2].signedFor),
-    }),
-    email: new FormControl('', Validators.email),
-  })
-  // fb = new FormBuilder();
-
-  // constructor() {
-  //   const versionSelectGroup = this.form.get('versionSelect') as FormGroup;
-
-  //   for (let box of this.boxes) {
-  //     versionSelectGroup.addControl(String(box.id), new FormControl(box.signedFor));
-  //   }
-  // }
+  // boxes = [alpha, beta, release];
 
   onSubmit() {
-    console.log(`Signup form submitted with: ${this.form.value}`)
-    // logger.debug(`Signup form submitted with: ${this.form.value}`);
-  }
-
-  onEmailInput(event: any) {
-    console.log(`Accessing content differently: ${event.target.value}`);
-    // logger.debug(`Accessing content differently: ${event.target.value}`);
-  }
-
-  checkboxClicked(b: TCheckBox) {
-    // logger.debug(`Checkbox ${b.versionName} clicked!`);
-    console.log(`Checkbox ${b.versionName} clicked!`);
+    this.form.valid
+      ? console.log('Form Submitted:', this.form.value)
+      : console.error('Form is invalid')
   }
 }
