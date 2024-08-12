@@ -1,14 +1,17 @@
-import { Component } from '@angular/core';
-import { TuFormComponent } from '../tu-form/tu-form.component';
+import { Component, OnInit } from '@angular/core';
+import logger from '../../../../src/logger';
 
 @Component({
   selector: 'app-landing',
   standalone: true,
-  imports: [ TuFormComponent ],
+  imports: [],
   templateUrl: './landing.component.html',
   styleUrl: './landing.component.css'
 })
 
-export class LandingComponent {
+export class LandingComponent implements OnInit{
 
+  ngOnInit(): void {
+    logger.debug(`Landing component initialized`);
+  }
 }

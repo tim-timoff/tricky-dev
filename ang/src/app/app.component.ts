@@ -1,20 +1,16 @@
 import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { LandingComponent } from './landing/landing.component';
-import { RouterModule } from '@angular/router';
+import { RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [ 
-    LandingComponent, 
-    RouterModule 
-  ],
-  providers: [
-  ],
+  imports: [CommonModule, RouterOutlet, LandingComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
 
 export class AppComponent {
-  title = 'Tricky Blog';
+  title = '';
 }

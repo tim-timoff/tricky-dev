@@ -1,33 +1,20 @@
-import { Component, OnInit } from '@angular/core';
 import { bootstrapApplication } from '@angular/platform-browser';
-import { PrimeNGConfig } from 'primeng/api';
-import { LandingComponent } from './app/landing/landing.component';
-
-import 'zone.js';
+import { appConfig } from './app/app.config';
+import { AppComponent } from './app/app.component';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [LandingComponent],
+  imports: [],
   template: `
-    <app-landing></app-landing>
+    <app-root></app-root>
   `,
 })
 
 export class App {
-  name = 'Tricky';
-
-  constructor(private primengConfig: PrimeNGConfig) {}
-
-  ngOnInit() {
-    this.primengConfig.ripple = true;
-    this.primengConfig.zIndex = {
-      modal: 1100, // dialog, sidebar
-      overlay: 1000, // dropdown, overlaypanel
-      menu: 1000, // overlay menus
-      tooltip: 1100, // tooltip
-    };
-  }
+  name ='Tricky';
 }
 
-bootstrapApplication(App);
+bootstrapApplication(AppComponent, appConfig)
+  .catch((err) => console.error(err));

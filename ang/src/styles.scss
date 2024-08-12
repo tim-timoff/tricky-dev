@@ -1,0 +1,64 @@
+@use '@angular/material' as mat;
+
+$arsenal: mat.define-typography-level(
+  $font-family: Arsenal,
+  $font-weight: 400,
+  $letter-spacing: normal,
+);
+
+$arsenal-bold: mat.define-typography-level(
+  $font-family: Arsenal,
+  $font-weight: 400,
+  $letter-spacing: normal,
+);
+
+$spectral-200: mat.define-typography-level(
+  $font-family: Spectral,
+  $font-weight: 200,
+  $letter-spacing: normal,
+);
+
+$spectral-300: mat.define-typography-level(
+  $font-family: Spectral,
+  $font-weight: 300,
+  $letter-spacing: normal,
+);
+
+$spectral-400: mat.define-typography-level(
+  $font-family: Spectral,
+  $font-weight: 400,
+  $letter-spacing: normal,
+);
+
+$spectral-400-italic: mat.define-typography-level(
+  $font-family: Spectral,
+  $font-weight: 400,
+  $font-variant: italic,
+  $letter-spacing: normal,
+);
+
+$spectral-600: mat.define-typography-level(
+  $font-family: Spectral,
+  $font-weight: 600,
+  $letter-spacing: normal,
+);
+
+$spectral-600-italic: mat.define-typography-level(
+  $font-family: Spectral,
+  $font-weight: 600,
+  $font-variant: italic,
+  $letter-spacing: normal,
+);
+
+$spectral-800: mat.define-typography-level(
+  $font-family: Spectral,
+  $font-weight: 800,
+  $letter-spacing: normal,
+);
+
+$spectral-800-italic: mat.define-typography-level(
+  $font-family: Spectral,
+  $font-weight: 800,
+  $font-variant: italic,
+  $letter-spacing: normal,
+);
