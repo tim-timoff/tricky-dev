@@ -4,6 +4,7 @@
 
 <form [formGroup]="form">
   <tricky-chip-control
+    [multiple]="true"
     formControlName="chips"
     [label]="'Выберите этап тестирования'"
     >
@@ -11,9 +12,9 @@
     <tricky-chip
       *ngFor="let box of boxes"
       [key]="box.versionKey"
-      [color]="box.versionColour"
       [checked]="box.versionChecked"
-    >
+      >
+      <!-- [color]="box.versionColour" -->
       {{ box.versionName }}
     </tricky-chip>
   </tricky-chip-control>
@@ -26,10 +27,10 @@
     required="true"
     formControlName="email"
   >
-  <p-button
-    icon="pi pi-check"
-    label="Зарегистрироваться"
+  <!-- icon="pi pi-check" -->
+  <!-- label="Зарегистрироваться" -->
+  <button
     (click)="onSubmit()"
     type="submit"
-  ></p-button>
+  >Зарегистрироваться</button>
 </form>

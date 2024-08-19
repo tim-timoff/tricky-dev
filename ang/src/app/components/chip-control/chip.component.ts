@@ -1,52 +1,77 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, HostBinding, HostListener, Input, Output } from '@angular/core';
-import { ETagColor, ICheckableTagState } from './tag.model';
-import { NgFor, NgForOf } from '@angular/common';
-
+import {
+  ChangeDetectionStrategy,
+  Component,
+  EventEmitter,
+  HostListener,
+  inject,
+  Input,
+  Output,
+  signal,
+  WritableSignal,
+} from '@angular/core';
+import { ETagColor, ICheckableTagState, TTagColor, TTagKey, TTagSize } from './chip.model';
+// import { InputBoolean } from '@shared/input-transforms/input-boolean.transform';
+// import { isNonEmptyString } from '@shared/utils/helpers';
+import { CheckAllTagDirective } from './all-checked.directive';
 
 @Component({
   selector: 'tricky-chip',
+  template: `<ng-content></ng-content>`,
   standalone: true,
-  imports: [ NgForOf, NgFor ],
-  template: `
-     <ng-content></ng-content>
-  `,
-  styleUrl: './chip.component.less',
+  styleUrls: ['./chip.component.less'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  host: {
+    class: 'ceres-tag',
+    '[class.ceres-tag--checkable]': 'isCheckableSignal()',
+    '[class.ceres-tag--checked]': 'checked',
+    '[style.--ceres-tag-color]': 'tagColorSignal()',
+    '[attr.size]': 'size',
+  }
 })
-export class ChipComponent {
+export class TrickyChipComponent {
+  private readonly _isCheckAll: boolean = !!inject(CheckAllTagDirective, { optional: true });
+  private _key: TTagKey = null;
 
-  private _color: ETagColor = ETagColor['gray'];
-  @Input('key') key: string = '';
-  @Input('size') @HostBinding('attr.size') size: 'normal' | 'small' = 'normal';
-  @Input('checked') @HostBinding('attr.checked') checked: boolean = false;
-  @Input('checkable') @HostBinding('class.ceres-tag--checkable') checkable: boolean = true;
+  tagColorSignal: WritableSignal<TTagColor> = signal(ETagColor['gray']);
+  isCheckableSignal: WritableSignal<boolean> = signal(false);
+
+  @Input('size') size: TTagSize = 'normal';
+  @Input('checked') checked: boolean = false;
+
   @Input('color')
-  set color(value: ETagColor | string) {
+  set color(value: TTagColor) {
+    // if (!isNonEmptyString(value)) { return; }
     //@ts-ignore
-    this._color = value;
+    this.tagColorSignal.set(ETagColor[value] || value);
   }
-  get color() {
-    return this._color;
+
+  @Input('checkable')
+  set isCheckable(value: boolean) {
+    this.isCheckableSignal.set(value);
   }
+
+  @Input('key')
+  set key(value: TTagKey) {
+    if (this._isCheckAll) { return; }
+    this._key = value;
+  }
+
+  get key() {
+    return this._key;
+  }
+
   @Output('checkableChange') checkableChange: EventEmitter<ICheckableTagState> = new EventEmitter<ICheckableTagState>();
 
-  @HostBinding('class.tricky-tag') readonly ceresTagClass = true;
-  @HostBinding('style.borderColor') get borderColor(): ETagColor | string {
-    return this.color;
-  };
+  @HostListener('click')
+  clickHandler() {
+    if (!this.isCheckableSignal()) { return; }
 
-  @HostBinding('style.backgroundColor') get backgroundColor(): ETagColor | null | string {
-    return this.checked ? this.color : null;
-  }
-
-  @HostListener('click') clickHandler() {
-    if (!this.checkable) { return; }
     this.checked = !this.checked;
-    const changes: ICheckableTagState = {
+
+    this.checkableChange.emit({
       key: this.key,
       checked: this.checked,
-    };
-
-    this.checkableChange.next(changes);
+      isCheckAll: this._isCheckAll,
+    });
   }
 }

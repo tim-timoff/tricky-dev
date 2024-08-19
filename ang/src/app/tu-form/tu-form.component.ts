@@ -1,19 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { CheckboxModule } from 'primeng/checkbox';
 import { CommonModule } from '@angular/common';
-import { ButtonModule } from 'primeng/button';
-import { InputTextModule } from 'primeng/inputtext';
-import { PanelModule } from 'primeng/panel';
 import { TestCheckBox } from './tu-form.model';
-import { ChipComponent } from '../components/chip-control/chip.component';
+import { TrickyChipComponent } from '../components/chip-control/chip.component';
 import { ChipControlComponent } from '../components/chip-control/chip-control.component';
+import { TTagColor } from '../components/chip-control/chip.model';
 
 class TCheckBox implements TestCheckBox {
   public versionKey: string;
   public versionName: string;
   public versionHelpTxt: string;
-  public versionColour: string;
+  public versionColour: TTagColor | string;
   public versionChecked: boolean;
 
   constructor(key: string, verRu: string, txt: string, colour: string, checked: boolean) {
@@ -36,12 +33,8 @@ const release = new TCheckBox('Release', 'Релиз', 'Зовите меня, �
   imports: [
     ReactiveFormsModule,
     FormsModule,
-    CheckboxModule,
     CommonModule,
-    ButtonModule,
-    InputTextModule,
-    PanelModule,
-    ChipComponent,
+    TrickyChipComponent,
     ChipControlComponent
   ],
 })

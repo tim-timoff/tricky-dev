@@ -1,8 +1,8 @@
 import { NgIf } from '@angular/common';
 import { ChangeDetectionStrategy, Component, ContentChildren, forwardRef, HostBinding, Input, QueryList, signal } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
-import { ICheckableTagState, TTagKey } from './tag.model';
-import { ChipComponent } from './chip.component';
+import { ICheckableTagState, TTagKey } from './chip.model';
+import { TrickyChipComponent } from './chip.component';
 import { map, tap } from 'rxjs';
 
 @Component({
@@ -52,7 +52,7 @@ export class ChipControlComponent implements ControlValueAccessor{
   @Input('scrollable') @HostBinding('class.chip-control--scrollable') scrollable: boolean = false;
   @Input('label') label?: string;
   @HostBinding('class.chip-control') readonly ChipControlClass = true;
-  @ContentChildren(ChipComponent) tagList!: QueryList<ChipComponent>;
+  @ContentChildren(TrickyChipComponent) tagList!: QueryList<TrickyChipComponent>;
 
   private onChange: (value: Map<TTagKey, boolean>) => void = () => {};
   private onTouched: () => void = () => {};
@@ -71,7 +71,7 @@ export class ChipControlComponent implements ControlValueAccessor{
 
   private markAllTagsCheckable() {
     this.tagList?.forEach(tag => {
-      tag.checkable = true;
+      tag.isCheckable = true;
     });
   }
 
